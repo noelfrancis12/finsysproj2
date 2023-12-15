@@ -35,7 +35,7 @@ SECRET_KEY = 'django-insecure-@ym=g-9p=kgp46%-$ug_t#g%3o5g(f6+37-wzyd16h=z*&grds
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['accuhub.in']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -88,9 +88,9 @@ WSGI_APPLICATION = 'infoxfinsys.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'infoxtec_FinsysFinalFile',
-        'USER':'infoxtec_FinsysFinalFile',
-        'PASSWORD':'FinsysFinalFile',
+        'NAME': 'finzyzdb',
+        'USER':'root',
+        'PASSWORD':'',
         'HOST':'localhost',
         'PORT':'3306',
     }
