@@ -31474,7 +31474,52 @@ def add_mjournal(request):
         vndr = vendor.objects.filter(cid=cmp1)
         employee=payrollemployee.objects.filter(cid_id=cmp1)
         
-        context = {'acc':acc,'cmp1':cmp1,'cust':cust,'vndr':vndr,'employee':employee}
+
+        ref = mjournal.objects.last()
+
+        if ref:
+            ref_no = int(ref.ref_no) + 1
+            j_no = 1000+ref_no
+
+        else:
+            ref_no = 1
+            j_no = 1000
+
+        sel = mjournal.objects.filter(cid=cmp1).last()
+        if sel:
+            j_no = str(sel.mj_no)
+            numbers = []
+            stri = []
+            for word in j_no:
+                if word.isdigit():
+                    numbers.append(word)
+                else:
+                    stri.append(word)
+            
+            num=''
+            for i in numbers:
+                num +=i
+            
+            st = ''
+            for j in stri:
+                st = st+j
+
+            j_no = int(num)+1
+
+            if num[0] == '0':
+                if j_no <10:
+                    j_no = st+'0'+ str(j_no)
+                else:
+                    j_no = st+ str(j_no)
+            else:
+                j_no = st+ str(j_no)
+
+        inv_list = ''
+        inv_ord = mjournal.objects.all()
+        for s in inv_ord:
+            inv_list = s.mj_no+ ',' + inv_list
+
+        context = {'acc':acc,'cmp1':cmp1,'cust':cust,'vndr':vndr,'employee':employee,'ref_no':ref_no, 'j_no':j_no,'ref':ref,'sel':sel,'inv_ord':inv_ord,'inv_list':inv_list,}
         return render(request,'app1/add_mjournal.html',context)   
         
 
@@ -46405,11 +46450,7 @@ from django.db.models import OuterRef, Subquery
 def sort_contactname(request):
     cmp1 = company.objects.get(id=request.session["uid"])
     
-    subquery = mjournal1.objects.filter(mjrnl=OuterRef('id')).order_by('id').values('contact')[:1]
-    
-    mj = mjournal.objects.filter(cid=cmp1).annotate(
-        first_contact=Subquery(subquery)
-    ).order_by('first_contact')
+    mj = mjournal.objects.filter(cid=cmp1).annotate(total_deb_int=Cast('total_deb', IntegerField())).order_by('total_deb_int')
     
     return render(request, 'app1/mjournal.html', {'mj': mj, 'cmp1': cmp1})
 

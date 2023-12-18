@@ -102,11 +102,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <label class="col-form-label">Journal no * </label>
-                                                <input type="text" class="form-control"   id="jno" name="jnum"  required> </div>
+                                                <label class="col-form-label">Journal no * </label><span class="text-danger mt-1 ml-3" id="dangerdiv" style="display: none;"><span class="text-white"> (</span>This Number Should be Continous <span class="text-white">)</span></span>
+                                                <input type="text" class="form-control"   id="jno" name="jnum" placeholder="{{j_no}}" required> </div>
+                                               
+                                    
                                             <div class="col-md-3">
                                                 <label class="col-form-label">Reference no  </label>
-                                                <input type="text" class="form-control"  id="rjno" name="rjnum">
+                                                <input type="text" class="form-control"  id="rjno" value="{{ref_no}}" name="rjnum">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -135,10 +137,10 @@
                                         <div class="row">
                                             <div class="col-md-4" >
                             
-                                                <label class="col-form-label">Journal Type </label>
+                                                <!-- <label class="col-form-label">Journal Type </label>
                                                 <input style="margin-left:90px;" type="checkbox" 
                                                        name="jtype" id="jtype" value="Cash based journal">
-                                                       <label for="jtype" class="col-form-label">Cash based journal</label>
+                                                       <label for="jtype" class="col-form-label">Cash based journal</label> -->
                                             </div>
                                     </div><br>
                                         <div class="row">
@@ -615,7 +617,27 @@
             
             
         </script>
-
+        
+<script type="text/javascript">
+    $(document).on('change','#j_no', function() {
+        inv = '{{j_no}}'
+        inv_value = $('#j_no').val();
+        if(inv_value != inv){
+            document.getElementById('dangerdiv').style.display = 'block';
+        }else{
+            document.getElementById('dangerdiv').style.display = 'none';
+        }
+        var inv_list = "{{ inv_list}}";
+        invlist = inv_list.split(",");
+        for(let i=0; i<invlist.length; i++){
+            if (inv_value == invlist[i]){
+                alert('Invoice Number Number already in use.')
+                document.getElementById('dangerdiv').style.display = 'none';
+                document.getElementById('j_no').value = ''
+            }
+        }
+    })
+</script>
         <!-- <script>
             // Initialize Select2 on your select element
             $(document).ready(function () {
