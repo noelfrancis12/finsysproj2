@@ -395,18 +395,47 @@ footer p {
                             <li class="nav-item mx-1">
                               <a class="btn btn-outline-info rounded-pill text-grey p-1" role="button" href="{% url 'm_journal_pdf' sale.id %}" id="downloadButton" >&nbsp;&nbsp;PDF&nbsp;&nbsp;</a>
                             </li>
-                            <div class="dropdown p-0 nav-item mx-1 "  style="margin-top: 10px;">
-                                <li  class=" dropdown-toggle btn btn-outline-info rounded-pill text-grey p-1"data-toggle="dropdown"> &nbsp;&nbsp;Share&nbsp;&nbsp;</li>
-                                <ul class="dropdown-menu" style="background-color: black;">
-        
-                                    <li style="margin-left: 50px;"  ></i>{% post_to_facebook object_or_url "Facebook!" %}</li>
-                                    <li style="margin-left: 50px;" > {% post_to_whatsapp object_or_url "WhatsApp" %}</li>
-                                    <li style="margin-left: 50px;" >{% send_email object.title "New Song: {{object.title}}. Check it out!" object_or_url "Email" %}</li>
-                                    
-                                </ul>
-                              </div>
+                            <li class="nav-item mx-1 dropdown">
+                                <a class="btn btn-outline-info rounded-pill text-grey p-1 dropdown-toggle" role="button" id="shareDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Share
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="shareDropdown">
+                                    <a class="dropdown-item" style="cursor: pointer;" data-target="#shareBillWhatsApp" data-toggle="modal">{% post_to_whatsapp object_or_url "WhatsApp" %}</a>
+                                    <a class="dropdown-item" style="cursor: pointer;" data-target="#shareBillEmail" data-toggle="modal">Email</a>
+                                </div>
+                            </li>
+                            
                            
+<script>
+    function shareViaWhatsApp() {
+    // Collect data from the table or any other relevant information
+    var tableData = getTableData(); // Implement the function to fetch table data
 
+    // Create a message to be shared on WhatsApp
+    var message = "Check out the Purchase Order Details:\n" + tableData;
+
+    // Create a link with the WhatsApp API format
+    var whatsappLink = "https://wa.me/?text=" + encodeURIComponent(message);
+
+    // Open the link in a new tab or window
+    window.open(whatsappLink, "_blank");
+    }
+
+    function shareViaGmail() {
+    // Collect data from the table or any other relevant information
+    var tableData = getTableData(); // Implement the function to fetch table data
+
+    // Create email subject and body
+    var emailSubject = "Recurring Bill Details";
+    var emailBody = "Check out the Recurring Bill Details:\n" + tableData;
+
+    // Create a mailto link with subject and body for Gmail
+    var gmailLink = "https://mail.google.com/mail/?view=cm&fs=1&to=&su=" + encodeURIComponent(emailSubject) + "&body=" + encodeURIComponent(emailBody);
+
+    // Open the link in a new tab or window
+    window.open(gmailLink, "_blank");
+}
+</script>
                             
 
                             <li class="nav-item mx-1">
@@ -433,7 +462,42 @@ footer p {
                 
             </div>
         </div>
-        
+        <div class="modal fade" id="shareBillEmail">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content" style="background: #243e54;border-radius: 20px;">
+                <div class="modal-header" style="background: #243e54;">
+                  <h5 class="m-3 text-uppercase" id="shareBillEmailLabel">Share Sales Order Via Email</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                      aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style="background: #243e54;">
+                  <div class="card p-3 m-3">
+                    <form action="{% url 'purchaseOrderDetailsToEmail' %}" method="post" class="needs-validation"
+                      id="share_to_email_form" autocomplete="off">
+                      {% csrf_token %}
+                      <input name="FromD" class="inputdate form-control"  id="date1"  type="date" hidden >
+                      <input name="ToD" class="inputdate form-control"  id="date2" type="date" hidden>
+                      <div class="form-group">
+                        
+                        <label for="emailIds">Email IDs</label>
+                        <textarea class="form-control text-light" name="email_ids" id="emailIds" rows="5"
+                          placeholder="Multiple emails can be added by separating with a comma(,)." required></textarea>
+                      </div>
+                      <div class="form-group mt-2">
+                        <label for="item_unitname">Message(optional)</label>
+                        <textarea name="email_message" id="email_message" class=" form-control text-light" cols=""
+                          rows="4" placeholder="This message will be sent along with Bill details."></textarea>
+                      </div>
+                    
+                  </div>
+                  <div class="modal-footer d-flex justify-content-center" style="border-top: 1px solid #ffff;">
+                    <input type="submit" id="generateAndSendPdf" class="submitShareEmailBtn rounded-pill text-grey w-50 my-4 mx-3" style="background-color: #0d2b46;padding: 7px 0;" value="SEND MAIL">
+                  </div>
+                </div></form>
+
+              </div>
+            </div>
+          </div> 
 
         
         <div  id="whatToPrint" class="print-only">
