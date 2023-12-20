@@ -51763,3 +51763,16 @@ def purchaseOrderDetailsToEmail(request):
                 return redirect('purchase_order_details')
                 
 #End
+
+def journal_details(request):
+    cmp1 = company.objects.get(id=request.user)
+    details = mjournal1.objects.all()
+    # defaultCount = purchaseorder.objects.filter(cid_id = request.user.id).count()
+    defaultAmount=0
+    for i in details:
+        defaultAmount += float(i.credit)
+    defaultAmountb=0
+    for i in details:
+        defaultAmountb += float(i.debit)
+    # return render(request,'app1/journal_details.html',{'details':details,'cmp1':cmp1,'defaultCount':defaultCount})
+    return render(request,'app1/journal_details.html',{'details':details,'cmp1':cmp1,'defaultAmount':defaultAmount,'defaultAmountb':defaultAmountb})

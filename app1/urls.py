@@ -1367,5 +1367,6 @@ urlpatterns = [
     path('purchaseOrderDetailsToEmail',views.purchaseOrderDetailsToEmail,name="purchaseOrderDetailsToEmail"),
     
     path('debit_add_file/<int:id>/', views.debit_add_file, name='debit_add_file'),
- 
+    #noel
+    path('journal_details',views.journal_details,name='journal_details'),
 ]
