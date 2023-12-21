@@ -286,7 +286,20 @@ footer p {
 
     }
 
+    .template1 {
+    color: #556B2F; /* Dark Olive Green */
+    font-family: 'Arial', sans-serif;
+}
 
+.template2 {
+    color: #8A2BE2; /* Blue Violet */
+    font-family: 'Times New Roman', serif;
+}
+
+.template3 {
+    color: #DC143C; /* Crimson */
+    font-family: 'Courier New', monospace;
+}
 
 
 
@@ -375,6 +388,17 @@ footer p {
                     </div>
                     <div class="collapse navbar-collapse" id="navbarScroll">
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="detailsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Details Template
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="detailsDropdown">
+                                    <a class="dropdown-item" href="#" onclick="changeTemplate('template1')">Template 1</a>
+                                    <a class="dropdown-item" href="#" onclick="changeTemplate('template2')">Template 2</a>
+                                    <a class="dropdown-item" href="#" onclick="changeTemplate('template3')">Template 3</a>
+                                </div>
+                            </li>
+                            
                           <li class="nav-item mx-1">
                             <a href="{% url 'mj_edit_page' sale.id  %}" role="button" class=" btn btn-outline-info rounded-pill text-grey p-1"> &nbsp;&nbsp;Edit&nbsp;&nbsp;</a>
 
@@ -504,6 +528,7 @@ footer p {
           </div> 
 
           <div id="detailed-view" style="display:none;">
+            <div id="detailsSection" class="detail-section template1">
         <div  id="whatToPrint" class="print-only">
             
                 <div class="my-5 page" size="A4" >
@@ -688,6 +713,7 @@ footer p {
             </div>
             
         </div>
+    </div>
             </div>
 <!-- 
             <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
@@ -896,6 +922,21 @@ aria-hidden="true">
         {% endfor %}
     </div>
 </div>
+<script>
+    function changeTemplate(templateId) {
+        // Define the base details section
+        let detailsSection = document.getElementById('detailsSection');
+
+        // Clear previous template classes
+        detailsSection.classList.remove('template1', 'template2', 'template3');
+
+        // Add the new template class
+        detailsSection.classList.add(templateId);
+
+        // Log the change (optional)
+        console.log('Changing to template:', templateId);
+    }
+</script>
 
 
     {% endif %}
