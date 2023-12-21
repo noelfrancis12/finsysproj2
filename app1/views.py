@@ -31591,14 +31591,14 @@ def create_mjournal(request):
 def view_mj(request,id):
     cmp1 = company.objects.get(id=request.session['uid'])
     upd = mjournal.objects.get(id=id, cid=cmp1)
-
+    upde = mjournal.objects.all()
     saleitem = mjournal1.objects.filter(mjrnl=id)
 
     context ={
         'sale':upd,
         'cmp1':cmp1,
         'saleitem':saleitem,
-        
+        'upde':upde,
 
     }
 

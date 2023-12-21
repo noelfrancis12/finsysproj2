@@ -369,6 +369,10 @@ footer p {
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    <div class="view-toggle-buttons">
+                        <button id="show-overview">Show Overview</button>
+                        <button id="show-details">Show Details</button>
+                    </div>
                     <div class="collapse navbar-collapse" id="navbarScroll">
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                           <li class="nav-item mx-1">
@@ -499,7 +503,7 @@ footer p {
             </div>
           </div> 
 
-        
+          <div id="detailed-view" style="display:none;">
         <div  id="whatToPrint" class="print-only">
             
                 <div class="my-5 page" size="A4" >
@@ -683,7 +687,7 @@ footer p {
 
             </div>
             
-        
+        </div>
             </div>
 <!-- 
             <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
@@ -853,7 +857,45 @@ aria-hidden="true">
             }
         });
     </script> 
+<script>
+    document.getElementById('show-overview').addEventListener('click', function() {
+        document.getElementById('overview-section').style.display = 'block';
+        document.getElementById('detailed-view').style.display = 'none';
+    });
 
+    document.getElementById('show-details').addEventListener('click', function() {
+        document.getElementById('overview-section').style.display = 'none';
+        document.getElementById('detailed-view').style.display = 'block';
+    });
+</script>
+<div id="overview-section" style="padding: 20px; background: #f2f2f2; border-radius: 10px; margin: 20px 0; color: #1c72b4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h2 style="color: #0d2b46; margin-bottom: 20px;">Journal Overview</h2>
+    <div class="overview-detail">
+        {% for j in saleitem %}
+        <div class="journal-entry" style="padding: 15px; margin-bottom: 10px; border-left: 3px solid #1c72b4; background-color: #fff; color: #333; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <p style="margin-bottom: 10px;"><strong>Date:</strong> {{ j.mjrnl.date }}</p>
+            <p style="margin-bottom: 10px;"><strong>Journal No:</strong> {{ j.mjrnl.mj_no }}</p>
+            <p style="margin-bottom: 10px;"><strong>Reference No:</strong> {{ j.mjrnl.ref_no }}</p>
+            <p style="margin-bottom: 10px;"><strong>Notes:</strong> {{ j.mjrnl.notes }}</p>
+            <p style="margin-bottom: 10px;"><strong>Currency:</strong> {{ j.mjrnl.currency }}</p>
+            <p style="margin-bottom: 10px;"><strong>Account:</strong> {{ j.account }}</p>
+            <p style="margin-bottom: 10px;"><strong>Description:</strong> {{ j.desc }}</p>
+            <p style="margin-bottom: 10px;"><strong>Contact:</strong> {{ j.contact }}</p>
+            <p style="margin-bottom: 10px;"><strong>Debit:</strong> {{ j.debit }}</p>
+            <p style="margin-bottom: 10px;"><strong>Credit:</strong> {{ j.credit }}</p>
+        </div>
+        {% if forloop.last %}
+        <div style="border-top: 2px solid #1c72b4; padding-top: 10px;">
+            <h3 style="color: #0d2b46; margin-bottom: 10px;">Total:</h3>
+            <p><strong>Total Debits:</strong> {{ sale.s_totaldeb }}</p>
+            <p><strong>Total Credits:</strong> {{ sale.s_totalcre }}</p>
+        </div>
+        {% endif %}
+        {% empty %}
+        <p>No journal entries found.</p>
+        {% endfor %}
+    </div>
+</div>
 
 
     {% endif %}
