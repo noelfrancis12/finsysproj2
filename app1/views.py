@@ -27978,7 +27978,7 @@ def sales_order_view(request,id):
     sale_fname = upd.salename.split(' ')[1]
     sale_lname = upd.salename.split(' ')[2]
     saleitem = sales_item.objects.filter(salesorder=id)
-    cust = customer.objects.get(firstname = sale_fname,lastname=sale_lname,cid=cmp1)
+    # cust = customer.objects.get(firstname = sale_fname,lastname=sale_lname,cid=cmp1)
     tot_dis = 0
     for s in saleitem:
         tot_dis += int( s.discount)
