@@ -31569,8 +31569,12 @@ def create_mjournal(request):
                 acc = request.POST.getlist('account[]')
                 desc = request.POST.getlist('jdesc[]')
                 cont = request.POST.getlist('jcontact[]')
-                deb = request.POST.getlist('jdebit[]')
-                cred = request.POST.getlist('jcredit[]')
+                deb_raw = request.POST.getlist('jdebit[]')
+                cred_raw = request.POST.getlist('jcredit[]')
+
+                # Convert empty strings in 'cred_raw' to None (or 0.0 if that's preferred)
+                cred = [None if x == '' else float(x) for x in cred_raw]
+                deb = [None if x == '' else float(x) for x in deb_raw]
                 
                 mj=mjournal.objects.get(id=mjrnl1.id)
 

@@ -402,8 +402,29 @@
                                                     <label for="acctyp">Account Type</label>
                                                     <select name="acctype" id="select1" class="custom-select-md form-control w-100">
     
-                                                        <option>Expenses</option>
-                                                        <option>Other Expenses</option>
+                                                        <optgroup label="Assets" style="background-color: rgb(114, 114, 244);">Assets</optgroup>
+                                                        <option style="padding-left:15px" value="Other Asset"> Other Asset </option>
+                                                        <option style="padding-left:15px" value="Other Current Asset"> Other Current Asset </option>
+                                                        <option style="padding-left:15px" value="Cash"> Cash </option>
+                                                        <option style="padding-left:15px" value="Bank"> Bank </option>
+                                                        <option style="padding-left:15px" value="Fixed Asset"> Fixed Asset </option>
+                                                        <option style="padding-left:15px" value="Stock"> Stock</option>
+                                                        <option style="padding-left:15px" value="Payment Clearing"> Payment Clearing</option>
+                                                        <optgroup label="Liability" style="background-color: rgb(114, 114, 244);">Liability</optgroup>
+                                                        <option style="padding-left:30px" value="Other Current Liability">Other Current Liability </option>
+                                                        <option style="padding-left:15px" value="Credit Card"> Credit Card </option>
+                                                        <option style="padding-left:15px" value="Long Term Liability"> Long Term Liability </option>
+                                                        <option style="padding-left:15px" value="Other Liability"> Other Liability </option>
+                                                        <option style="padding-left:15px" value="Overseas Tax Payable"> Overseas Tax Payable </option>
+                                                        <optgroup label="Equity" style="background-color: rgb(114, 114, 244);">Equity</optgroup>
+                                                        <option style="padding-left:15px" value="Equity"> Equity </option>
+                                                        <optgroup label="Income" style="background-color: rgb(114, 114, 244);">Income</optgroup>
+                                                        <option style="padding-left:15px" value="Income"> Income </option>
+                                                        <option style="padding-left:15px" value="Other Income"> Other Income </option>
+                                                        <optgroup label="Expense"style="background-color: rgb(114, 114, 244);">Expense</optgroup>
+                                                        <option style="padding-left:15px" value="Expense"> Expense </option>
+                                                        <option style="padding-left:15px" value="Cost Of Goods Sold"> Cost Of Goods Sold </option>
+                                                        <option style="padding-left:15px" value="Other Expense"> Other Expense </option>
     
                                                     </select>
                                                 </div>
@@ -428,8 +449,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6 mt-2">
+                                                    <!-- <textarea class="form-control mt-2" name="Type details" cols="20"
+                                                    rows="10" style="font-size: small;" disabled>Use Cash and Cash Equivalents to track cash or assets that can be converted into cash immediately. For example, marketable securities and Treasury bills.</textarea> -->
                                                     <textarea class="form-control mt-2" name="Type details" cols="20"
-                                                    rows="10" style="font-size: small;" disabled>Use Cash and Cash Equivalents to track cash or assets that can be converted into cash immediately. For example, marketable securities and Treasury bills.</textarea>
+                                                    rows="10" style="font-size: small;" disabled>Track special assets like goodwill and other intangible assets</textarea>
                                                 </div>
                                                 <div class="col-md-6 mt-2">
                                                     <div class="mt-2">
