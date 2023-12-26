@@ -532,9 +532,13 @@ $(document).on('click', '.btn_print', function (event) {
                             <!-- <td>{{i.date}}</td>
                             <td>{{i.puchaseorder_no}}</td>
                             <td>{{i.due_date}}</td> -->
-                            <td>{{i.account}}</td>
-                            <td>{{i.debit}}</td>
-                            <td>{{i.credit}}</td>
+                            <td>{% if i.account %}
+                                {{ i.account }}
+                            {% else %}
+                                {{ i.contact }}  <!-- Assuming 'contact' is the field name -->
+                            {% endif %}</td>
+                            <td>{{i.debit|default_if_none:"0"}}</td>
+                            <td>{{i.credit|default_if_none:"0"}}</td>
                         </tr>
                         {% endfor %}
                         

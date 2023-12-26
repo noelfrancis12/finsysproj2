@@ -51772,11 +51772,15 @@ def journal_details(request):
     cmp1 = company.objects.get(id=request.user)
     details = mjournal1.objects.all()
     # defaultCount = purchaseorder.objects.filter(cid_id = request.user.id).count()
-    defaultAmount=0
+    defaultAmount = 0
     for i in details:
-        defaultAmount += float(i.credit)
-    defaultAmountb=0
+        credit = float(i.credit) if i.credit is not None else 0
+        defaultAmount += credit
+
+    defaultAmountb = 0
     for i in details:
-        defaultAmountb += float(i.debit)
+        debit = float(i.debit) if i.debit is not None else 0
+        defaultAmountb += debit
+
     # return render(request,'app1/journal_details.html',{'details':details,'cmp1':cmp1,'defaultCount':defaultCount})
     return render(request,'app1/journal_details.html',{'details':details,'cmp1':cmp1,'defaultAmount':defaultAmount,'defaultAmountb':defaultAmountb})

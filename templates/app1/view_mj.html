@@ -286,98 +286,127 @@ footer p {
 
     }
 /* Template 1 Specific Styles */
+#whatToPrint1 {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
 #whatToPrint1 .header {
-    background-color: #F3F4F6;
-    padding: 15px;
+    background-color: #f8f9fa;
+    color: #007bff;
+    padding: 20px;
     text-align: center;
 }
 
 #whatToPrint1 table {
-    width: 100%;
     border-collapse: collapse;
-}
-
-#whatToPrint1 table, #whatToPrint1 th, #whatToPrint1 td {
-    border: 1px solid #ddd;
+    width: 100%;
 }
 
 #whatToPrint1 th, #whatToPrint1 td {
+    border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
 
-#whatToPrint1 tr:nth-child(even){background-color: #f2f2f2;}
-/* Template 2 Specific Styles */
+#whatToPrint1 tr:nth-child(even) {background-color: #f2f2f2;}
+#whatToPrint2 {
+    font-family: 'Georgia', serif;
+    color: #2f4f4f;
+}
+
 #whatToPrint2 .card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    padding: 15px;
+    background-color: #fafafa;
+    border: 2px solid #d3d3d3;
+    padding: 20px;
     margin-bottom: 15px;
 }
 
-#whatToPrint2 .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+#whatToPrint2 .container {
+    padding: 20px;
 }
 
-#whatToPrint2 .container {
-    padding: 2px 16px;
+#whatToPrint2 table {
+    border-collapse: collapse;
+    width: 100%;
 }
-/* Template 3 Specific Styles */
+
+#whatToPrint2 th, #whatToPrint2 td {
+    border: 1px solid #a9a9a9;
+    padding: 10px;
+    text-align: left;
+}
+
+#whatToPrint2 tr:hover {background-color: #f5f5f5;}
+#whatToPrint3 {
+    font-family: 'Arial', sans-serif;
+    color: #000;
+}
+
 #whatToPrint3 .header {
-    background: url('header-image.jpg') no-repeat center center;
-    background-size: cover;
+    background-color: #ff4500;
     color: white;
+    padding: 20px;
     text-align: center;
-    padding: 50px;
 }
 
 #whatToPrint3 .entry {
-    border-bottom: 1px solid #eee;
+    background-color: #fff;
     padding: 15px;
-}
-
-#whatToPrint3 .entry:last-child {
-    border: none;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #whatToPrint3 .footer {
-    background-color: #F3F4F6;
-    padding: 15px;
+    background-color: #303030;
+    color: white;
+    padding: 10px;
     text-align: center;
 }
+
+#whatToPrint3 table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#whatToPrint3 th, #whatToPrint3 td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#whatToPrint3 tr:nth-child(even) {background-color: #f2f2f2;}
 
   
     </style>
 
 <script>
-
-
+    // This function identifies the active template and generates a PDF from it.
     async function generatePDF() {
-        // document.getElementById("downloadButton").innerHTML = "Currently downloading, please wait";
+        var activeTemplateId = getActiveTemplateId(); // Get the active template's ID.
+        var activeTemplate = document.getElementById(activeTemplateId); // Get the active template element.
+        var doc = new jsPDF('p', 'pt', 'a4');
 
-        //Downloading
-        var downloading = document.getElementById("whatToPrint");
-        var doc = new jsPDF('l', 'pt');
+        await html2canvas(activeTemplate).then((canvas) => {
+            // This will create a 'snapshot' of the active template.
+            doc.addImage(canvas.toDataURL("image/png"), 'PNG', 15, 15, 560, 0);
+        });
 
-        await html2canvas(downloading, {
-            //allowTaint: true,
-            //useCORS: true,
-            // width: 600
-            
-        }).then((canvas) => {
-            //Canvas (convert to PNG)
-            doc.addImage(canvas.toDataURL("image/png"), 'PNG', 15, 10, 700, 850);
-        })
-
-        doc.save("Document.pdf");
-
-        //End of downloading
-
-        // document.getElementById("downloadButton").innerHTML = "Click to download";
+        doc.save("Document.pdf"); // Save the PDF with a dynamic name based on the template or other data if needed.
     }
 
-    
+    // This function returns the ID of the currently active template.
+    function getActiveTemplateId() {
+        var templates = document.getElementsByClassName('printTemplates');
+        for (var i = 0; i < templates.length; i++) {
+            if (templates[i].style.display === 'block') {
+                return templates[i].id; // Return the ID of the active template.
+            }
+        }
+        return null; // In case no template is active, though this shouldn't happen.
+    }
 </script>
+
 
 
 	
@@ -456,7 +485,8 @@ footer p {
                             </li>
       
                             <li class="nav-item mx-1">
-                              <a class="btn btn-outline-info rounded-pill text-grey p-1" role="button" href="{% url 'm_journal_pdf' sale.id %}" id="downloadButton" >&nbsp;&nbsp;PDF&nbsp;&nbsp;</a>
+                                <a class="btn btn-outline-info rounded-pill text-grey p-1" role="button" href="javascript:void(0);" onclick="generatePDF()" id="downloadButton">&nbsp;&nbsp;PDF&nbsp;&nbsp;</a>
+
                             </li>
                             <li class="nav-item mx-1 dropdown">
                                 <a class="btn btn-outline-info rounded-pill text-grey p-1 dropdown-toggle" role="button" id="shareDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -620,7 +650,7 @@ footer p {
                         </section>
             
                         <section class="product-area mt-4">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-info">
                                 <thead>
                                     <tr>
                                         <td style="color:black;font-weight:bold">ACCOUNT</td>
@@ -635,8 +665,9 @@ footer p {
                                     <tr>
                                         <td style="color:black">{{j.account}}</td>
                                         <td style="color:black">{{j.contact}}</td>
-                                        <td style="color:black">{{j.debit|default_if_none:"0.0"}}</td>
-                                        <td style="color:black">{{j.credit|default_if_none:"0.0"}}</td>
+                                        <td style="color:black">{{j.debit|default_if_none:"0.00"|floatformat:2}}</td>
+                                        <td style="color:black">{{j.credit|default_if_none:"0.00"|floatformat:2}}</td>
+                                        
                                     
                                     </tr>
                                     {% endfor %}
@@ -816,21 +847,22 @@ footer p {
                                         <tr>
                                             <td style="color:black">{{j.account}}</td>
                                             <td style="color:black">{{j.contact}}</td>
-                                            <td style="color:black">{{j.debit}}.00</td>
-                                            <td style="color:black">{{j.credit}}.00 </td>
+                                            <td style="color:black">{{j.debit|default_if_none:"0.00"|floatformat:2}}</td>
+<td style="color:black">{{j.credit|default_if_none:"0.00"|floatformat:2}}</td>
+
                                         
                                         </tr>
                                         {% endfor %}
                                         <tr></tr>
                                         <tr style="width: 100%;margin-top: 1px;color:black; font-weight:bold"  >
                                             <td colspan="2" class="table-head" style="font-size:13px;color:black; font-weight:bold">Sub Total</td>
-                                            <td class="pcs-total-section-value text-align-center" style="color: #000000;">₹{{ sale.s_totaldeb }}.00</td>
-                                            <td class="pcs-total-section-value text-align-right" style="color: #000000;">₹{{ sale.s_totalcre }}.00</td>
+                                            <td class="pcs-total-section-value text-align-center" style="color: #000000;">₹{{ sale.s_totaldeb }}</td>
+                                            <td class="pcs-total-section-value text-align-right" style="color: #000000;">₹{{ sale.s_totalcre }}</td>
                                         </tr>
                                         <tr  style="height:40px;" class="pcs-balance">
                                             <td colspan="2"  style="padding:5px 10px 5px 0;font-size:16px;color:black; font-weight:bold"><b>Total</b></td>
-                                            <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_deb }}.00</b></td>
-                                            <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_cre }}.00</b></td>
+                                            <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_deb }}</b></td>
+                                            <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_cre }}</b></td>
                                         </tr>
     
                                     </tbody>
@@ -928,7 +960,7 @@ footer p {
                     </div>
                     <div  id="whatToPrint3" class="print-only printTemplates" style="display: none;">
             
-                        <div class="my-5 page" size="A4" >
+                        <div class="my-5 page" size="A4" style="background-image: linear-gradient(#1b83e8, black); color: white;">
                             <div class="p-5">
                                 <div id="ember2512" class="tooltip-container ember-view ribbon text-ellipsis">
                                     <div class="ribbon-inner ribbon-open" style="color:black;font-weight:bold">{{sale.status}}</div>
@@ -982,7 +1014,7 @@ footer p {
                                 </section>
                     
                                 <section class="product-area mt-4">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover table-info">
                                         <thead>
                                             <tr>
                                                 <td style="color:black;font-weight:bold">ACCOUNT</td>
@@ -997,21 +1029,22 @@ footer p {
                                             <tr>
                                                 <td style="color:black">{{j.account}}</td>
                                                 <td style="color:black">{{j.contact}}</td>
-                                                <td style="color:black">{{j.debit}}.00</td>
-                                                <td style="color:black">{{j.credit}}.00 </td>
+                                                <td style="color:black">{{j.debit|default_if_none:"0.00"|floatformat:2}}</td>
+<td style="color:black">{{j.credit|default_if_none:"0.00"|floatformat:2}}</td>
+
                                             
                                             </tr>
                                             {% endfor %}
                                             <tr></tr>
                                             <tr style="width: 100%;margin-top: 1px;color:black; font-weight:bold"  >
                                                 <td colspan="2" class="table-head" style="font-size:13px;color:black; font-weight:bold">Sub Total</td>
-                                                <td class="pcs-total-section-value text-align-center" style="color: #000000;">₹{{ sale.s_totaldeb }}.00</td>
-                                                <td class="pcs-total-section-value text-align-right" style="color: #000000;">₹{{ sale.s_totalcre }}.00</td>
+                                                <td class="pcs-total-section-value text-align-center" style="color: #000000;">₹{{ sale.s_totaldeb }}</td>
+                                                <td class="pcs-total-section-value text-align-right" style="color: #000000;">₹{{ sale.s_totalcre }}</td>
                                             </tr>
                                             <tr  style="height:40px;" class="pcs-balance">
                                                 <td colspan="2"  style="padding:5px 10px 5px 0;font-size:16px;color:black; font-weight:bold"><b>Total</b></td>
-                                                <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_deb }}.00</b></td>
-                                                <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_cre }}.00</b></td>
+                                                <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_deb }}</b></td>
+                                                <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_cre }}</b></td>
                                             </tr>
         
                                         </tbody>
@@ -1110,7 +1143,7 @@ footer p {
             </div>
             
         </div>
-        <div>
+        <div style="text-align: center;">
             <button id="toggleTemplate1" onclick="toggleTemplate('whatToPrint1','toggleTemplate1')" class="btn btn-outline-light btn-sm m-2 active templateToggleButtons">Template 1</button>
             <button id="toggleTemplate2" onclick="toggleTemplate('whatToPrint2','toggleTemplate2')" class="btn btn-outline-light btn-sm m-2 templateToggleButtons">Template 2</button>
             <button id="toggleTemplate3" onclick="toggleTemplate('whatToPrint3','toggleTemplate3')" class="btn btn-outline-light btn-sm m-2 templateToggleButtons">Template 3</button>
@@ -1439,8 +1472,8 @@ aria-hidden="true">
                     {% endif %}
                     <hr class="my-4" style="background-color: #fff;">
                     <div class="d-flex justify-content-between mb-4">
-                        <h5 class="">Comments</h5>
-                        <h6>{{ sale.comments }}</h6>
+                        <!-- <h5 class="">Comments</h5>
+                        <h6>{{ sale.comments }}</h6> -->
                     </div><br>
                 </div>
             </div>
