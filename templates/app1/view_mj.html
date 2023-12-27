@@ -456,8 +456,8 @@ footer p {
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="view-toggle-buttons">
-                        <button id="show-overview">Show Overview</button>
-                        <button id="show-details">Show Details</button>
+                        <button class="btn btn-secondary" id="show-overview">Overview</button>
+                        <button class="btn btn-secondary" id="show-details">Template</button>
                     </div>
                     <div class="collapse navbar-collapse" id="navbarScroll">
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -539,7 +539,7 @@ footer p {
                             <div class="dropdown p-0 nav-item mx-1 " style="margin-top: 10px;">
                                 <li  class="btn btn-outline-info rounded-pill text-grey p-1  dropdown-toggle  "data-toggle="dropdown"> &nbsp;&nbsp;Convert&nbsp;&nbsp;</li>
                                   <ul class="dropdown-menu" style="background-color: black;">
-                                      <a class="dropdown-item " href="{% url 'm_journal_convert1' sale.id  %}"> &nbsp;Published </a>
+                                      <a class="dropdown-item " href="{% url 'm_journal_convert1' sale.id  %}"> &nbsp;Save </a>
                                       <!-- {% if sale.status != 'Invoice' %}
                                       <a class="dropdown-item " href="{% url 'sale_convert2' sale.id  %}"> &nbsp;Invoice</a>
                                       {% endif %} -->
@@ -1144,9 +1144,9 @@ footer p {
             
         </div>
         <div style="text-align: center;">
-            <button id="toggleTemplate1" onclick="toggleTemplate('whatToPrint1','toggleTemplate1')" class="btn btn-outline-light btn-sm m-2 active templateToggleButtons">Template 1</button>
-            <button id="toggleTemplate2" onclick="toggleTemplate('whatToPrint2','toggleTemplate2')" class="btn btn-outline-light btn-sm m-2 templateToggleButtons">Template 2</button>
-            <button id="toggleTemplate3" onclick="toggleTemplate('whatToPrint3','toggleTemplate3')" class="btn btn-outline-light btn-sm m-2 templateToggleButtons">Template 3</button>
+            <button id="toggleTemplate1" onclick="toggleTemplate('whatToPrint1','toggleTemplate1')" class="btn btn-outline-light btn-sm m-2 active templateToggleButtons">1</button>
+            <button id="toggleTemplate2" onclick="toggleTemplate('whatToPrint2','toggleTemplate2')" class="btn btn-outline-light btn-sm m-2 templateToggleButtons">2</button>
+            <button id="toggleTemplate3" onclick="toggleTemplate('whatToPrint3','toggleTemplate3')" class="btn btn-outline-light btn-sm m-2 templateToggleButtons">3</button>
         </div> 
     </div>
     
@@ -1344,30 +1344,30 @@ aria-hidden="true">
                         <div class="col-md-4 mt-3"></div>
 
                         <div class="col-md-2 mt-3">
-                            <h6 class="mb-0">Company</h6>
+                            <h6 class="mb-0">Company:</h6>
                         </div>
                         <div class="col-md-4 mt-3">
-                            <p class="mb-0 text-right">{{ cmp1.cname}}</p>
+                            <p class="mb-0 text-right text-light">{{ cmp1.cname}}</p>
                         </div>
                         <div class="col-md-2 mt-3 vl">
-                            <h6 class="mb-0">Email</h6>
+                            <h6 class="mb-0">Email:</h6>
                         </div>
                         <div class="col-md-4 mt-3">
-                            <p class="mb-0 text-right">{{ cmp1.cemail }}</p>
+                            <p class="mb-0 text-right text-light">{{ cmp1.cemail }}</p>
                         </div>
                     </div>
                     <div class="row mb-4 d-flex justify-content-between align-items-center">
                         <div class="col-md-2 mt-3">
-                            <h6 class="mb-0">Mobile</h6>
+                            <h6 class="mb-0">Mobile:</h6>
                         </div>
                         <div class="col-md-4 mt-3">
-                            <p class="mb-0 text-right">{{ cmp1.phone }}</p>
+                            <p class="mb-0 text-right text-light">{{ cmp1.phone }}</p>
                         </div>
                         <div class="col-md-2 mt-3 vl">
-                            <h6 class="mb-0">Address</h6>
+                            <h6 class="mb-0">Address:</h6>
                         </div>
                         <div class="col-md-4 mt-3">
-                            <p class="mb-0 text-right">{{ cmp1.caddress }} <br>
+                            <p class="mb-0 text-right text-light">{{ cmp1.caddress }} <br>
                                 {{cmp1.city}},
                                 {{cmp1.state}}
                                 {{cmp1.pincode}}</p>
@@ -1382,41 +1382,41 @@ aria-hidden="true">
                         <div class="col-md-4 mt-3"></div>
 
                         <div class="col-md-3 mt-3">
-                            <h6 class="mb-0">Journal #</h6>
+                            <h6 class="mb-0">Journal #:</h6>
                         </div>
                         <div class="col-md-3 mt-3">
-                            <p class="mb-0 text-right">{{ sale.mj_no }}</p>
+                            <p class="mb-0 text-right text-light">{{ sale.mj_no }}</p>
                         </div>
 
                         <div class="col-md-3 mt-3 vl">
-                            <h6 class="mb-0">Date</h6>
+                            <h6 class="mb-0">Date:</h6>
                         </div>
                         <div class="col-md-3 mt-3">
-                            <p class="mb-0 text-right">{{ sale.date }}</p>
+                            <p class="mb-0 text-right text-light">{{ sale.date }}</p>
                         </div>
                         
                     </div>
                     <div class="row mb-4 d-flex justify-content-between align-items-center">
                         <div class="col-md-3 mt-3">
-                            <h6 class="mb-0">Reference #</h6>
+                            <h6 class="mb-0">Reference #:</h6>
                         </div>
                         <div class="col-md-3 mt-3">
-                            <p class="mb-0 text-right">{{ sale.ref_no }}</p>
+                            <p class="mb-0 text-right text-light">{{ sale.ref_no }}</p>
                         </div>
 
                         <div class="col-md-3 mt-3 vl">
-                            <h6 class="mb-0">Notes</h6>
+                            <h6 class="mb-0">Notes:</h6>
                         </div>
                         <div class="col-md-3 mt-3">
-                            <p class="mb-0 text-right">{{ sale.notes }}</p>
+                            <p class="mb-0 text-right text-light">{{ sale.notes }}</p>
                         </div>
                     </div>
                     <div class="row mb-4 d-flex justify-content-start align-items-center">
                         <div class="col-md-3 mt-3"> 
-                            <h6 class="mb-0">Currency</h6>
+                            <h6 class="mb-0">Currency:</h6>
                         </div>
                         <div class="col-md-3 mt-3 vr">
-                            <p class="mb-0">{{ sale.currency }}</p>
+                            <p class="mb-0 text-light">{{ sale.currency }}</p>
                         </div>
                         <div class="col-md-6 mt-3 vl">
                             <h6 class="mb-0">&nbsp;</h6>
