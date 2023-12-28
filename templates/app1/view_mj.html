@@ -383,17 +383,22 @@ footer p {
 <script>
     // This function identifies the active template and generates a PDF from it.
     async function generatePDF() {
-        var activeTemplateId = getActiveTemplateId(); // Get the active template's ID.
-        var activeTemplate = document.getElementById(activeTemplateId); // Get the active template element.
-        var doc = new jsPDF('p', 'pt', 'a4');
+    var activeTemplateId = getActiveTemplateId(); // Get the active template's ID.
+    var activeTemplate = document.getElementById(activeTemplateId); // Get the active template element.
+    var doc = new jsPDF('p', 'pt', 'a4');
 
-        await html2canvas(activeTemplate).then((canvas) => {
-            // This will create a 'snapshot' of the active template.
-            doc.addImage(canvas.toDataURL("image/png"), 'PNG', 15, 15, 560, 0);
-        });
+    await html2canvas(activeTemplate).then((canvas) => {
+        // This will create a 'snapshot' of the active template.
+        doc.addImage(canvas.toDataURL("image/png"), 'PNG', 15, 15, 560, 0);
+    });
 
-        doc.save("Document.pdf"); // Save the PDF with a dynamic name based on the template or other data if needed.
-    }
+    // Fetch the journal number from the page (assuming it's stored in an element with ID 'journalNumber').
+    var journalNumber = document.getElementById('journalNumber').innerText || 'Document';
+
+    // Save the PDF with the journal number as the file name.
+    doc.save(`${journalNumber}.pdf`);
+}
+
 
     // This function returns the ID of the currently active template.
     function getActiveTemplateId() {
@@ -537,6 +542,7 @@ footer p {
                           
                             </li>
                             <div class="dropdown p-0 nav-item mx-1 " style="margin-top: 10px;">
+                                {% if sale.status != 'Publish' %}
                                 <li  class="btn btn-outline-info rounded-pill text-grey p-1  dropdown-toggle  "data-toggle="dropdown"> &nbsp;&nbsp;Convert&nbsp;&nbsp;</li>
                                   <ul class="dropdown-menu" style="background-color: black;">
                                       <a class="dropdown-item " href="{% url 'm_journal_convert1' sale.id  %}"> &nbsp;Save </a>
@@ -544,7 +550,7 @@ footer p {
                                       <a class="dropdown-item " href="{% url 'sale_convert2' sale.id  %}"> &nbsp;Invoice</a>
                                       {% endif %} -->
                                   </ul>
-                                
+                                  {% endif %}
                               </div>
                             
   
@@ -599,7 +605,11 @@ footer p {
                 <div class="my-5 page" size="A4" >
                     <div class="p-5">
                         <div id="ember2512" class="tooltip-container ember-view ribbon text-ellipsis">
-                            <div class="ribbon-inner ribbon-open" style="color:black;font-weight:bold">{{sale.status}}</div>
+                            <div class="ribbon-inner ribbon-open" style="color:black;font-weight:bold"> {% if sale.status == 'Publish' %}
+                                Saved
+                            {% else %}
+                                {{ sale.status }}
+                            {% endif %}</div>
                         </div>
                         <!-- <section class="top-content bb d-flex justify-content-between">
                             <div class="logo">
@@ -781,7 +791,11 @@ footer p {
                     <div class="my-5 page" size="A4" >
                         <div class="p-5">
                             <div id="ember2512" class="tooltip-container ember-view ribbon text-ellipsis">
-                                <div class="ribbon-inner ribbon-open" style="color:black;font-weight:bold">{{sale.status}}</div>
+                                <div class="ribbon-inner ribbon-open" style="color:black;font-weight:bold"> {% if sale.status == 'Publish' %}
+                                    Saved
+                                {% else %}
+                                    {{ sale.status }}
+                                {% endif %}</div>
                             </div>
                             <!-- <section class="top-content bb d-flex justify-content-between">
                                 <div class="logo">
@@ -963,7 +977,11 @@ footer p {
                         <div class="my-5 page" size="A4" style="background-image: linear-gradient(#1b83e8, black); color: white;">
                             <div class="p-5">
                                 <div id="ember2512" class="tooltip-container ember-view ribbon text-ellipsis">
-                                    <div class="ribbon-inner ribbon-open" style="color:black;font-weight:bold">{{sale.status}}</div>
+                                    <div class="ribbon-inner ribbon-open" style="color:black;font-weight:bold"> {% if sale.status == 'Publish' %}
+                                        Saved
+                                    {% else %}
+                                        {{ sale.status }}
+                                    {% endif %}</div>
                                 </div>
                                 <!-- <section class="top-content bb d-flex justify-content-between">
                                     <div class="logo">
@@ -1423,7 +1441,7 @@ aria-hidden="true">
                         </div>
                     </div>
                     <hr>
-                   
+                    <span id="journalNumber" style="display:none;">{{ sale.mj_no }}</span>
                 </div>
             </div>
             <div class="col-md-4" style="background-color: rgba(22,37,50,255); border-top-right-radius:2vh; border-bottom-right-radius: 2vh;">
@@ -1431,7 +1449,11 @@ aria-hidden="true">
                     <h3 class="fw-bold mb-3 mt-2 pt-1">DEBIT/CREDIT</h3>
                     <div class="d-flex justify-content-between mb-4">
                         <h5 class="">Bill status</h5>
-                        <h6>{{ sale.status }}</h6>
+                        <h6> {% if sale.status == 'Publish' %}
+                            Saved
+                        {% else %}
+                            {{ sale.status }}
+                        {% endif %}</h6>
                     </div>
                     <hr class="my-4" style="background-color: #fff;">
                     <div class="d-flex justify-content-between mb-4">

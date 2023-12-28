@@ -31727,7 +31727,7 @@ def update_mj(request, id):
 
 
 
-        return redirect('gomjoural')
+        return redirect('view_mj',id)
 
     return render(request, 'app1/mj_edit.html', {'mjrnl': mjrnl, 'cmp1': cmp1})
  
@@ -51770,7 +51770,7 @@ def purchaseOrderDetailsToEmail(request):
 
 def journal_details(request):
     cmp1 = company.objects.get(id=request.user)
-    details = mjournal1.objects.all()
+    details = mjournal1.objects.filter(cid=cmp1)
     # defaultCount = purchaseorder.objects.filter(cid_id = request.user.id).count()
     defaultAmount = 0
     for i in details:
