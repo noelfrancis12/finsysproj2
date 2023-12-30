@@ -14,17 +14,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
 
 <style>
-    @media print {
-    body {
-        width: 100%;
-        margin: 0;
-    }
-    
-    table {
-        width: 100%;
-    }
-}
+   @media print {
+        body * {
+            visibility: hidden; /* Hide everything in the body when printing... */
+        }
 
+        .print-only, .print-only * {
+            visibility: visible; /* ...except the print-only content */
+        }
+
+        .print-only {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            background: white; /* White background for print */
+        }
+
+        /* Additional print styles for table */
+        .print-only table {
+            width: 100%; /* Full width */
+            border-collapse: collapse; /* For neat borders */
+        }
+
+        .print-only th, .print-only td {
+            border: 1px solid black; /* Visible borders for cells */
+            padding: 5px; /* Padding for content */
+            text-align: left; /* Align text to left */
+        }
+    }
 tr {
     page-break-inside: avoid;
 }
@@ -129,7 +147,7 @@ tr {
                 <div class="right ml-auto" >
 
                     <button class="btn btn_pdf btn-outline-info" onclick="exportAsPDF()">pdf</button>
-                    <button class="btn btn_print btn-outline-info" onclick="printTable()">Print</button>
+                    <button class="btn btn_print btn-outline-info" onclick="printPage()">Print</button>
                     <button class=" btn btn-outline-info" id="export-button" onclick="exportAsExcel()">Excel</button>
                     <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Share
@@ -139,6 +157,11 @@ tr {
                         <a class="dropdown-item" style="cursor: pointer;" data-target="#shareBillEmail" data-toggle="modal">Email</a>
                         
                     </div>
+                    <script>
+                        function printPage() {
+                            window.print();
+                        }
+                        </script>
                     <!--  -->
                     <div class="modal fade" id="shareBillEmail">
                         <div class="modal-dialog modal-xl">
@@ -185,6 +208,7 @@ tr {
             </div>
         </div>
     </div>
+    
     <script>
 
 
