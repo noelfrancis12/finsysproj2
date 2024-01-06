@@ -602,268 +602,275 @@ footer p {
             <div id="detailsSection" class="detail-section template1">
         <div  id="whatToPrint1" class="print-only printTemplates" style="display: none;">
             
-                <div class="my-5 page" size="A4" >
-                    <div class="p-5">
-                        <div id="ember2512" class="tooltip-container ember-view ribbon text-ellipsis">
-                            <div class="ribbon-inner ribbon-open" style="color:black;font-weight:bold"> {% if sale.status == 'Publish' %}
-                                Saved
-                            {% else %}
-                                {{ sale.status }}
-                            {% endif %}</div>
+            <div class="my-5 page" size="A4" >
+                <div class="p-5" id="printdiv1">
+                    <div id="ember2512" class="tooltip-container ember-view ribbon text-ellipsis">
+                        <div class="ribbon-inner ribbon-open">{% if sale.status == 'Publish' %}
+                            Saved
+                        {% else %}
+                            {{ sale.status }}
+                        {% endif %}<!----></div></div>
+                    <section class="top-content bb d-flex justify-content-between">
+                        <div class="logo">
+                            <!-- <img src="logo.png" alt="" class="img-fluid"> -->
                         </div>
-                        <!-- <section class="top-content bb d-flex justify-content-between">
-                            <div class="logo">
-                              
+                        <div class="top-left">
+                            <div class="graphic-path">
+                                <p>Manual Journal</p>
                             </div>
-                            <div class="top-left">
-                                <div class="graphic-path">
-                                    <p>Sales Order</p>
-                                </div>
-                                <div class="position-relative">
-                                    <p>Sales Order No. <span>{{ sale.saleno }}</span></p>
-                                </div>
+                            <div class="position-relative">
+                                <p>Journal No. <span>{{ sale.mj_no }}</span></p>
                             </div>
-                        </section> -->
-            
-                        <section class="store-user mt-5">
-                            <div class="col-12">
-                                <div class="row bb pb-3">
-                                    <div class="col-7">
-                                        <p>FROM,</p>
-                                        <h5>{{cmp1.cname }}</h5>
-                                        <p class="address "> {{cmp1.caddress}}<br>
-                                            {{cmp1.city}},
-                                            {{cmp1.state}}<br>
-                                            {{cmp1.pincode}}<br>
-                                        </p>
-                                        
-                                    </div>
-                                    <div class="col-5">
-                                        
-                                        <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ sale.mj_no }}</p>
-                                        <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ sale.date }}</p>
-                                        <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ sale.total_deb }}</p>
-                                        <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ sale.ref_no }}</p>
-                                        
-                                        
-                                    </div>
-                                </div>
-                                <div class="row extra-info pt-3">
-                                    <div class="col-7">
-                                        <p>NOTES : <span>{{sale.notes}}</span></p>
-                                    </div>
-                                    <!-- <div class="col-5">
-                                        <p>Expected Shipment Date : <span>{{sale.shipmentdate | date:'d-m-Y'}}</span></p>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </section>
-            
-                        <section class="product-area mt-4">
-                            <table class="table table-hover table-info">
-                                <thead>
-                                    <tr>
-                                        <td style="color:black;font-weight:bold">ACCOUNT</td>
-                                        <td style="color:black;font-weight:bold">CONTACT</td>
-                                        <td style="color:black;font-weight:bold">DEBITS</td>
-                                        <td style="color:black;font-weight:bold">CREDITS</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    {% for j in saleitem %}
-                                    <tr>
-                                        <td style="color:black">{{j.account}}</td>
-                                        <td style="color:black">{{j.contact}}</td>
-                                        <td style="color:black">{{j.debit|default_if_none:"0.00"|floatformat:2}}</td>
-                                        <td style="color:black">{{j.credit|default_if_none:"0.00"|floatformat:2}}</td>
-                                        
+                        </div>
+                    </section>
+        
+                    <section class="store-user mt-5">
+                        <div class="col-12">
+                            <div class="row bb pb-3">
+                                <div class="col-7">
+                                    <p>FROM,</p>
+                                    <h5>{{cmp1.cname }}</h5>
+                                    <p class="address "> {{cmp1.caddress}}<br>
+                                        {{cmp1.city}},
+                                        {{cmp1.state}}<br>
+                                        {{cmp1.pincode}}<br>
+                                    </p>
                                     
-                                    </tr>
-                                    {% endfor %}
-                                    <tr></tr>
-                                    <tr style="width: 100%;margin-top: 1px;color:black; font-weight:bold"  >
-                                        <td colspan="2" class="table-head" style="font-size:13px;color:black; font-weight:bold">Sub Total</td>
-                                        <td class="pcs-total-section-value text-align-center" style="color: #000000;">₹{{ sale.s_totaldeb }}</td>
-                                        <td class="pcs-total-section-value text-align-right" style="color: #000000;">₹{{ sale.s_totalcre }}</td>
-                                    </tr>
-                                    <tr  style="height:40px;" class="pcs-balance">
-                                        <td colspan="2"  style="padding:5px 10px 5px 0;font-size:16px;color:black; font-weight:bold"><b>Total</b></td>
-                                        <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_deb }}</b></td>
-                                        <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_cre }}</b></td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </section>
-            
-                        <!-- <section class="balance-info">
-                            <div class="row">
-                                <div class="col-8">
-                                    <p class="m-0 font-weight-bold" style="color:black"> Note: </p>
-                                    <p style="color:black">{{sale.note}}</p>
                                 </div>
-                                <div class="col-4">
-                                    <table class="table border-0 table-hover">
+                                <div class="col-5">
+                                    <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ sale.mj_no }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ sale.date }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ sale.total_deb }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ sale.ref_no }}</p>
+                                              
+                                </div>
+                            </div>
+                            <div class="row extra-info pt-3">
+                                <div class="col-7">
+                                    <!-- <p>Sales Order Date: <span>{{sale.saledate | date:'d-m-Y'}}</span></p> -->
+                                </div>
+                                <div class="col-5">
+                                    <!-- <p>Expected Shipment Date : <span>{{sale.shipmentdate | date:'d-m-Y'}}</span></p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+        
+                    <section class="product-area mt-4">
+                        <table class=" table table-hover table-bordered " id="table1">
+                            <thead>
+                                <tr>
+                                    <td style="color:black;font-weight:bold">ACCOUNT</td>
+                                    <td style="color:black;font-weight:bold">CONTACT</td>
+                                    <td  style="color:black;font-weight:bold">DEBITS</td>
+                                    <td  style="color:black;font-weight:bold">CREDITS</td>
+                                </tr>
+                            </thead>
+                            <tbody >
+
+                                {% for j in saleitem %}
+                                <tr>
+                                    <td style="color:black">{{j.account}}</td>
+                                    <td style="color:black">{{j.contact}}</td>
+                                    <td style="color:black">{{j.debit|default_if_none:"0.00"|floatformat:2}}</td>
+                                    <td style="color:black">{{j.credit|default_if_none:"0.00"|floatformat:2}}</td>
+                                    
+                                
+                                </tr>
+                                {% endfor %}
+                                <tr></tr>
+                                <tr style="width: 100%;margin-top: 1px;color:black; font-weight:bold"  >
+                                    <td colspan="2" class="table-head" style="font-size:13px;color:black; font-weight:bold">Sub Total</td>
+                                    <td class="pcs-total-section-value text-align-center" style="color: #000000;">₹{{ sale.s_totaldeb }}</td>
+                                    <td class="pcs-total-section-value text-align-right" style="color: #000000;">₹{{ sale.s_totalcre }}</td>
+                                </tr>
+                                <tr  style="height:40px;" class="pcs-balance">
+                                    <td colspan="2"  style="padding:5px 10px 5px 0;font-size:16px;color:black; font-weight:bold"><b>Total</b></td>
+                                    <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_deb }}</b></td>
+                                    <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_cre }}</b></td>
+                                </tr>
+
+                            </tbody>
+                        </table><br><br>
+                    </section>
+        
+                    <section class="balance-info">
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <!-- <table class="table table-borderless">
+                                    <tbody>
                                         <tr >
-                                            <td style="color:black; font-weight:bold">Sub Total :</td>
-                                            <td style="color:black; font-weight:bold">{{sale.subtotal}}</td>
+                                            <td style="color: #000;">Sub Total</td>
+                                            <td style="color: #000;">:</td>
+                                            <td class="text-right" style="color: #000;">{{sale.subtotal}}</td>
                                         </tr>
-                                        <tr class="d-none" >
-                                            <td id="cmp">
-                                                {{cmp1.state}}
-                                            </td>
-                                            <td id="sply">
-                                                {{sale.placeofsupply}}
-                                            </td>
+                                        
+                                        {% if sale.IGST != '0' %}
+                                        <tr >
+                                            <td style="color: #000;">IGST</td>
+                                            <td style="color: #000;">:</td>
+                                            <td class="text-right" style="color: #000;">{{sale.IGST}}</td>
                                         </tr>
-                                        <tr id="igstrow" style="display:none;">
-                                            <td style="color:black;font-weight:bold">IGST</td>
-                                            <td style="color:black; font-weight:bold" id="igst">{{sale.taxamount}}</td>
-                                        </tr>
-                                        <tr id="cgstrow" style="display: none;">
-                                            <td style="color:black; font-weight:bold">CGST</td>
-                                            <td style="color:black; font-weight:bold" id="cgst"></td>
-                                        </tr>
-                                        <tr id="sgstrow" style="display: none;">
-                                            <td style="color:black; font-weight:bold">SGST</td>
-                                            <td style="color:black; font-weight:bold" id="sgst"></td>
-                                        </tr>
-                                   
+                                        {% endif %}
+                                        {% if sale.CGST != '0.00' %}
                                         <tr>
-                                            <td style="color:black; font-weight:bold">Tax Amount</td>
-                                            <td style="color:black; font-weight:bold">{{sale.taxamount}}</td>
+                                            <td style="color: #000;">CGST</td>
+                                            <td style="color: #000;">:</td>
+                                            <td class="text-right" style="color: #000;">{{sale.CGST}}</td>
+                                            
                                         </tr>
+                                        {% endif %}
+                                        {% if sale.SGST != '0.00' %}
+                                        <tr>
+                                            <td style="color: #000;">SGST</td>
+                                            <td style="color: #000;">:</td>
+                                            <td class="text-right" style="color: #000;">{{sale.SGST}}</td>
+                                        </tr>
+                                        {% endif %}
+                                        <tr >
+                                            <td style="color: #000;">Tax Amount</td>
+                                            <td style="color: #000;">:</td>
+                                            <td class="text-right" style="color: #000;">{{sale.taxamount}}</td>
+                                        </tr>
+                                        <tr >
+                                            <td style="color: #000;">Shipping Charge</td>
+                                            <td style="color: #000;">:</td>
+                                            <td class="text-right" style="color: #000;">{{sale.shipping_charge}}</td>
+                                        </tr>
+                                        {% if sale.adjust %}
+                                        <tr >
+                                            <td style="color: #000;">Adjustment</td>
+                                            <td style="color: #000;">:</td>
+                                            <td class="text-right" style="color: #000;">{{sale.adjust}}</td>
+                                        </tr>
+                                        {%endif%}
+                                    </tbody>
 
-                                        <tr>
-                                            <td style="color:black; font-weight:bold">Shipping Charge</td>
-                                            <td style="color:black; font-weight:bold">{{sale.shipping_charge}}</td>
+                                </table> -->
+                                <!-- <hr style="background-color: #000000;"> -->
+                                <!-- <table class="table table-borderless">
+                                    <tbody>
+                                        <tr >
+                                            <th style="color: #000;">Grand Total</th>
+                                            <th style="color: #000;">:</th>
+                                            <th class="text-right" style="color: #000;">{{sale.salestotal}}</th>
                                         </tr>
-                                        <tfoot>
-                                            <tr>
-                                                <td style="color:black; font-weight:bold">Sale Total:</td>
-                                                <td style="color:black; font-weight:bold ;">{{sale.salestotal}}</td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-            
-                                    
-                                </div>
+                                    </tbody>
+                                </table> -->
                             </div>
-                        </section> -->
-            
-                        <!-- Cart BG -->
-                        <!-- <img src="cart.jpg" class="img-fluid cart-bg" alt=""> -->
-            
-                        <!-- <footer>
-                            <hr>
-                            <p class="m-0 text-center">
-                                View THis Invoice Online At - <a href="#!"> invoice/saburbd.com/#868 </a>
-                            </p>
-                            <div class="social pt-3">
-                                <span class="pr-2">
-                                    <i class="fas fa fa-mobile-alt"></i>
-                                    <span>0123456789</span>
-                                </span>
-                                <span class="pr-2">
-                                    <i class="fas fa fa-envelope"></i>
-                                    <span>me@saburali.com</span>
-                                </span>
-                                <span class="pr-2">
-                                    <i class="fab fa-facebook-f"></i>
-                                    <span>/sabur.7264</span>
-                                </span>
-                                <span class="pr-2">
-                                    <i class="fab fa-youtube"></i>
-                                    <span>/abdussabur</span>
-                                </span>
-                                <span class="pr-2">
-                                    <i class="fab fa-github"></i>
-                                    <span>/example</span>
-                                </span>
-                            </div>
-                        </footer> -->
-                    </div>
+                        </div>
+                    </section>
+        
+                    <!-- Cart BG -->
+                    <img src="cart.jpg" class="img-fluid cart-bg" alt="">
+        
+                    <!-- <footer>
+                        <hr>
+                        <p class="m-0 text-center">
+                            View THis Invoice Online At - <a href="#!"> invoice/saburbd.com/#868 </a>
+                        </p>
+                        <div class="social pt-3">
+                            <span class="pr-2">
+                                <i class="fas fa fa-mobile-alt"></i>
+                                <span>0123456789</span>
+                            </span>
+                            <span class="pr-2">
+                                <i class="fas fa fa-envelope"></i>
+                                <span>me@saburali.com</span>
+                            </span>
+                            <span class="pr-2">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>/sabur.7264</span>
+                            </span>
+                            <span class="pr-2">
+                                <i class="fab fa-youtube"></i>
+                                <span>/abdussabur</span>
+                            </span>
+                            <span class="pr-2">
+                                <i class="fab fa-github"></i>
+                                <span>/example</span>
+                            </span>
+                        </div>
+                    </footer> -->
                 </div>
+            </div>
                 </div>
                 <div  id="whatToPrint2" class="print-only printTemplates" style="display: none;">
             
                     <div class="my-5 page" size="A4" >
-                        <div class="p-5">
-                            <div id="ember2512" class="tooltip-container ember-view ribbon text-ellipsis">
-                                <div class="ribbon-inner ribbon-open" style="color:black;font-weight:bold"> {% if sale.status == 'Publish' %}
+                        <div id="printdiv2">
+                            <div class="row px-5 py-4" style="background-color:#268ddd;" >
+                                <div id="ember2512" class="col-md-4 d-flex justify-content-start tooltip-container ember-view ribbon text-ellipsis">
+                                  <div class="text-white d-flex align-items-center px-5" style="border-radius: 1vh; background-color:#999999">{% if sale.status == 'Publish' %}
                                     Saved
                                 {% else %}
                                     {{ sale.status }}
-                                {% endif %}</div>
-                            </div>
-                            <!-- <section class="top-content bb d-flex justify-content-between">
-                                <div class="logo">
-                                  
-                                </div>
-                                <div class="top-left">
-                                    <div class="graphic-path">
-                                        <p>Sales Order</p>
-                                    </div>
-                                    <div class="position-relative">
-                                        <p>Sales Order No. <span>{{ sale.saleno }}</span></p>
-                                    </div>
-                                </div>
-                            </section> -->
-                
-                            <section class="store-user mt-5">
-                                <div class="col-12">
-                                    <div class="row bb pb-3">
-                                        <div class="col-7">
-                                            <p>FROM,</p>
-                                            <h5>{{cmp1.cname }}</h5>
-                                            <p class="address "> {{cmp1.caddress}}<br>
-                                                {{cmp1.city}},
-                                                {{cmp1.state}}<br>
-                                                {{cmp1.pincode}}<br>
-                                            </p>
-                                            
-                                        </div>
-                                        <div class="col-5">
-                                            
-                                            <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ sale.mj_no }}</p>
-                                            <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ sale.date }}</p>
-                                            <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ sale.total_deb }}</p>
-                                            <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ sale.ref_no }}</p>
-                                            
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="row extra-info pt-3">
-                                        <div class="col-7">
-                                            <p>NOTES : <span>{{sale.notes}}</span></p>
-                                        </div>
-                                        <!-- <div class="col-5">
-                                            <p>Expected Shipment Date : <span>{{sale.shipmentdate | date:'d-m-Y'}}</span></p>
-                                        </div> -->
-                                    </div>
-                                </div>
-                            </section>
-                
-                            <section class="product-area mt-4">
-                                <table class="table table-hover">
+                                {% endif %}<!----></div>
+                              </div>
+                              <div class="col-md-4 d-flex justify-content-center">
+                                  <center class="h3 text-white"><b>SALES ORDER</b></center>
+                              </div>  
+                              <div class="col-md-4 d-flex justify-content-end">
+                                  <div class="text-white">
+                                      <p class="mb-0 mt-2">Journal #: <b>{{sale.mj_no }}</b></p>
+                                  </div>
+                                  <!-- <div class="mt-2">
+                                      <p style="color: #000;">Date : <b>{{ ewbill.bill_date | date:'d-m-Y' }}</b></p>
+                                  </div> -->
+                              </div>
+                          </div>
+                          <div class="px-5 py-1">
+                              <section class="store-user"><br><br>
+                                  <div class="col-12">
+                                      <div class="row bb pb-2 mt-3">
+                                          <div class="col-4 pl-0">
+                                              <label class="text-white w-100 p-1" style="background-color: #999999; border-top-right-radius: 4vh; border-bottom-right-radius: 4vh;" ><b>BILLING ADDRESS</b></label>
+                                              <p class="address" style="font-weight: bold;color: #000;">
+                                                  {{cmp1.cname}}
+                                                  <br>
+                                                  {{cmp1.caddress}}
+                                                  <br>
+                                                  {{cmp1.city}}
+                                                  <br>
+                                                  {{cmp1.state}} - {{cmp1.pincode}}
+                                                  <br>
+                                                  <span>Mob: </span><b>{{cmp1.phone}}</b>
+                                              </p>  
+                                          </div>
+                                          <div class="col-4"></div>
+                                          <div class="col-4 pr-0">
+                                              <label class="text-white w-100 p-1" style="border-top-right-radius: 4vh; border-bottom-right-radius: 4vh; background-color: #999999;" ><b>JOUURNAL DETAILS</b></label>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ sale.mj_no }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ sale.date }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ sale.total_deb }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ sale.ref_no }}</p>
+                                              
+                                          </div>
+                                      </div>
+                                      
+                                  </div>
+                              </section>
+                  
+                              <section class="product-area mt-2">
+                                  <table class="table table-hover table-bordered  template2table" id="table2">
                                     <thead>
                                         <tr>
-                                            <td style="color:black;font-weight:bold">ACCOUNT</td>
-                                            <td style="color:black;font-weight:bold">CONTACT</td>
-                                            <td style="color:black;font-weight:bold">DEBITS</td>
-                                            <td style="color:black;font-weight:bold">CREDITS</td>
+                                            <td class="bg-dark" style="color:black;font-weight:bold">ACCOUNT</td>
+                                            <td class="bg-dark" style="color:black;font-weight:bold">CONTACT</td>
+                                            <td class="bg-dark" style="color:black;font-weight:bold">DEBITS</td>
+                                            <td class="bg-dark" style="color:black;font-weight:bold">CREDITS</td>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody style="background-color: #999999;">
     
                                         {% for j in saleitem %}
                                         <tr>
                                             <td style="color:black">{{j.account}}</td>
                                             <td style="color:black">{{j.contact}}</td>
                                             <td style="color:black">{{j.debit|default_if_none:"0.00"|floatformat:2}}</td>
-<td style="color:black">{{j.credit|default_if_none:"0.00"|floatformat:2}}</td>
-
+                                            <td style="color:black">{{j.credit|default_if_none:"0.00"|floatformat:2}}</td>
+                                            
                                         
                                         </tr>
                                         {% endfor %}
@@ -880,285 +887,199 @@ footer p {
                                         </tr>
     
                                     </tbody>
-                                </table>
-                            </section>
-                
-                            <!-- <section class="balance-info">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <p class="m-0 font-weight-bold" style="color:black"> Note: </p>
-                                        <p style="color:black">{{sale.note}}</p>
-                                    </div>
-                                    <div class="col-4">
-                                        <table class="table border-0 table-hover">
-                                            <tr >
-                                                <td style="color:black; font-weight:bold">Sub Total :</td>
-                                                <td style="color:black; font-weight:bold">{{sale.subtotal}}</td>
-                                            </tr>
-                                            <tr class="d-none" >
-                                                <td id="cmp">
-                                                    {{cmp1.state}}
-                                                </td>
-                                                <td id="sply">
-                                                    {{sale.placeofsupply}}
-                                                </td>
-                                            </tr>
-                                            <tr id="igstrow" style="display:none;">
-                                                <td style="color:black;font-weight:bold">IGST</td>
-                                                <td style="color:black; font-weight:bold" id="igst">{{sale.taxamount}}</td>
-                                            </tr>
-                                            <tr id="cgstrow" style="display: none;">
-                                                <td style="color:black; font-weight:bold">CGST</td>
-                                                <td style="color:black; font-weight:bold" id="cgst"></td>
-                                            </tr>
-                                            <tr id="sgstrow" style="display: none;">
-                                                <td style="color:black; font-weight:bold">SGST</td>
-                                                <td style="color:black; font-weight:bold" id="sgst"></td>
-                                            </tr>
-                                       
-                                            <tr>
-                                                <td style="color:black; font-weight:bold">Tax Amount</td>
-                                                <td style="color:black; font-weight:bold">{{sale.taxamount}}</td>
-                                            </tr>
-    
-                                            <tr>
-                                                <td style="color:black; font-weight:bold">Shipping Charge</td>
-                                                <td style="color:black; font-weight:bold">{{sale.shipping_charge}}</td>
-                                            </tr>
-                                            <tfoot>
-                                                <tr>
-                                                    <td style="color:black; font-weight:bold">Sale Total:</td>
-                                                    <td style="color:black; font-weight:bold ;">{{sale.salestotal}}</td>
+                                  </table>
+                              </section>
+                  
+                              <section class="balance-info">
+                                  <div class="row mt-3">
+                                      <div class="col-4">
+                                          <table class="table table-borderless">
+                                              <tbody>
+                                                  
+                                                  <!-- <tr >
+                                                      <td style="color: #000;text-align: left;">Payment Type</td>
+                                                      <td style="color: #000;text-align: left;">:</td>
+                                                      {% if bank %}
+                                                      <th style="color: #000;text-align: center;">{{bank.bankname}}</th>
+                                                      {% else %}
+                                                      <th style="color: #000;text-align: center;">{{pbill.payment_type}}</th>
+                                                      {% endif %}
+                                                  </tr>
+                                                  <tr>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                      
+                                                  </tr> -->
+                                                  {% if sale.note %}
+                                                  <tr >
+                                                      <td style="color: #000;text-align: left;">Note</td>
+                                                      <td style="color: #000;text-align: left;">:</td>
+                                                      <th style="color: #000;text-align: center;">{{sale.note}}</th>
+                                                  </tr>
+                                                  {% endif %}
+      
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                      <div class="col-4"></div>
+                                      <div class="col-4"><br><br>
+                                          <!-- <table class="table table-borderless">
+                                              <tbody>
+                                                  <tr >
+                                                      <td style="color: #000;">Sub Total</td>
+                                                      <td style="color: #000;">:</td>
+                                                      <td class="text-right" style="color: #000;">{{sale.subtotal}}</td>
+                                                  </tr>
+                                                  
+                                                  {% if sale.IGST != '0' %}
+                                                  <tr >
+                                                      <td style="color: #000;">IGST</td>
+                                                      <td style="color: #000;">:</td>
+                                                      <td class="text-right" style="color: #000;">{{sale.IGST}}</td>
+                                                  </tr>
+                                                  {% endif %}
+                                                  {% if sale.CGST != '0.00' %}
+                                                  <tr>
+                                                      <td style="color: #000;">CGST</td>
+                                                      <td style="color: #000;">:</td>
+                                                      <td class="text-right" style="color: #000;">{{sale.CGST}}</td>
+                                                      
+                                                  </tr>
+                                                  {% endif %}
+                                                  {% if sale.SGST != '0.00' %}
+                                                  <tr>
+                                                      <td style="color: #000;">SGST</td>
+                                                      <td style="color: #000;">:</td>
+                                                      <td class="text-right" style="color: #000;">{{sale.SGST}}</td>
+                                                  </tr>
+                                                  {% endif %}
+                                                  <tr >
+                                                    <td style="color: #000;">Tax Amount</td>
+                                                    <td style="color: #000;">:</td>
+                                                    <td class="text-right" style="color: #000;">{{sale.taxamount}}</td>
                                                 </tr>
-                                            </tfoot>
-                                        </table>
-                
-                                        
-                                    </div>
-                                </div>
-                            </section> -->
-                
-                            <!-- Cart BG -->
-                            <!-- <img src="cart.jpg" class="img-fluid cart-bg" alt=""> -->
-                
-                            <!-- <footer>
-                                <hr>
-                                <p class="m-0 text-center">
-                                    View THis Invoice Online At - <a href="#!"> invoice/saburbd.com/#868 </a>
-                                </p>
-                                <div class="social pt-3">
-                                    <span class="pr-2">
-                                        <i class="fas fa fa-mobile-alt"></i>
-                                        <span>0123456789</span>
-                                    </span>
-                                    <span class="pr-2">
-                                        <i class="fas fa fa-envelope"></i>
-                                        <span>me@saburali.com</span>
-                                    </span>
-                                    <span class="pr-2">
-                                        <i class="fab fa-facebook-f"></i>
-                                        <span>/sabur.7264</span>
-                                    </span>
-                                    <span class="pr-2">
-                                        <i class="fab fa-youtube"></i>
-                                        <span>/abdussabur</span>
-                                    </span>
-                                    <span class="pr-2">
-                                        <i class="fab fa-github"></i>
-                                        <span>/example</span>
-                                    </span>
-                                </div>
-                            </footer> -->
+                                                  <tr >
+                                                      <td style="color: #000;">Shipping Charge</td>
+                                                      <td style="color: #000;">:</td>
+                                                      <td class="text-right" style="color: #000;">{{sale.shipping_charge}}</td>
+                                                  </tr>
+                                                  {% if sale.adjust %}
+                                                  <tr >
+                                                      <td style="color: #000;">Adjustment</td>
+                                                      <td style="color: #000;">:</td>
+                                                      <td class="text-right" style="color: #000;">{{sale.adjust}}</td>
+                                                  </tr>
+                                                  {%endif%}
+                                              </tbody>
+      
+                                          </table> -->
+                                          <!-- <hr style="background-color: #000000;"> -->
+                                          <!-- <table class="table table-borderless">
+                                              <tbody>
+                                                  <tr >
+                                                      <th style="color: #000;">Grand Total</th>
+                                                      <th style="color: #000;">:</th>
+                                                      <th class="text-right" style="color: #000;">{{sale.salestotal}}</th>
+                                                  </tr>
+                                              </tbody>
+                                          </table> -->
+                                      </div> 
+                                  </div>
+                              </section>
+                                 
+                          </div>
                         </div>
                     </div>
                     </div>
                     <div  id="whatToPrint3" class="print-only printTemplates" style="display: none;">
             
-                        <div class="my-5 page" size="A4" style="background-image: linear-gradient(#1b83e8, black); color: white;">
-                            <div class="p-5">
-                                <div id="ember2512" class="tooltip-container ember-view ribbon text-ellipsis">
-                                    <div class="ribbon-inner ribbon-open" style="color:black;font-weight:bold"> {% if sale.status == 'Publish' %}
-                                        Saved
-                                    {% else %}
-                                        {{ sale.status }}
-                                    {% endif %}</div>
-                                </div>
-                                <!-- <section class="top-content bb d-flex justify-content-between">
-                                    <div class="logo">
-                                      
+                        <div class="my-5 page"  size="A4" >
+                            <div class="" id="printdiv3">
+                                <div class="row">
+                                    <div class="col-sm-12" style="background-image: linear-gradient(#1b83e8, black); color: white;">
+                                        <p style="font-size: 4vh; text-align: center;">Sales Order</p>
+                                        <p style=" text-align: center;"> {{cmp1.cname}} <br>
+                                            {{cmp1.caddress}} <br>
+                                            {{cmp1.city}},
+                                            {{cmp1.state}}<br>
+                                            {{cmp1.cemail}}
+                                            <br>
+                                        </p>
                                     </div>
-                                    <div class="top-left">
-                                        <div class="graphic-path">
-                                            <p>Sales Order</p>
-                                        </div>
-                                        <div class="position-relative">
-                                            <p>Sales Order No. <span>{{ sale.saleno }}</span></p>
-                                        </div>
-                                    </div>
-                                </section> -->
-                    
-                                <section class="store-user mt-5">
-                                    <div class="col-12">
-                                        <div class="row bb pb-3">
-                                            <div class="col-7">
-                                                <p>FROM,</p>
-                                                <h5>{{cmp1.cname }}</h5>
-                                                <p class="address "> {{cmp1.caddress}}<br>
-                                                    {{cmp1.city}},
-                                                    {{cmp1.state}}<br>
-                                                    {{cmp1.pincode}}<br>
-                                                </p>
-                                                
-                                            </div>
-                                            <div class="col-5">
-                                                
-                                                <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ sale.mj_no }}</p>
-                                                <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ sale.date }}</p>
-                                                <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ sale.total_deb }}</p>
-                                                <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ sale.ref_no }}</p>
-                                                
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="row extra-info pt-3">
-                                            <div class="col-7">
-                                                <p>NOTES : <span>{{sale.notes}}</span></p>
-                                            </div>
-                                            <!-- <div class="col-5">
-                                                <p>Expected Shipment Date : <span>{{sale.shipmentdate | date:'d-m-Y'}}</span></p>
-                                            </div> -->
-                                        </div>
-                                    </div>
-                                </section>
-                    
-                                <section class="product-area mt-4">
-                                    <table class="table table-hover table-info">
-                                        <thead>
-                                            <tr>
-                                                <td style="color:black;font-weight:bold">ACCOUNT</td>
-                                                <td style="color:black;font-weight:bold">CONTACT</td>
-                                                <td style="color:black;font-weight:bold">DEBITS</td>
-                                                <td style="color:black;font-weight:bold">CREDITS</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-        
-                                            {% for j in saleitem %}
-                                            <tr>
-                                                <td style="color:black">{{j.account}}</td>
-                                                <td style="color:black">{{j.contact}}</td>
-                                                <td style="color:black">{{j.debit|default_if_none:"0.00"|floatformat:2}}</td>
-<td style="color:black">{{j.credit|default_if_none:"0.00"|floatformat:2}}</td>
-
+                                    
+                                    <div class="row col-12">
+                                        <div class="col-md-1"></div>
+                                        <div class="col-5">
+                                            <br><br><br>
+                                            <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ sale.mj_no }}</p>
+                                            <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ sale.date }}</p>
+                                            <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ sale.total_deb }}</p>
+                                            <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ sale.ref_no }}</p>
                                             
-                                            </tr>
-                                            {% endfor %}
-                                            <tr></tr>
-                                            <tr style="width: 100%;margin-top: 1px;color:black; font-weight:bold"  >
-                                                <td colspan="2" class="table-head" style="font-size:13px;color:black; font-weight:bold">Sub Total</td>
-                                                <td class="pcs-total-section-value text-align-center" style="color: #000000;">₹{{ sale.s_totaldeb }}</td>
-                                                <td class="pcs-total-section-value text-align-right" style="color: #000000;">₹{{ sale.s_totalcre }}</td>
-                                            </tr>
-                                            <tr  style="height:40px;" class="pcs-balance">
-                                                <td colspan="2"  style="padding:5px 10px 5px 0;font-size:16px;color:black; font-weight:bold"><b>Total</b></td>
-                                                <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_deb }}</b></td>
-                                                <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_cre }}</b></td>
-                                            </tr>
-        
-                                        </tbody>
-                                    </table>
-                                </section>
-                    
-                                <!-- <section class="balance-info">
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <p class="m-0 font-weight-bold" style="color:black"> Note: </p>
-                                            <p style="color:black">{{sale.note}}</p>
                                         </div>
-                                        <div class="col-4">
-                                            <table class="table border-0 table-hover">
-                                                <tr >
-                                                    <td style="color:black; font-weight:bold">Sub Total :</td>
-                                                    <td style="color:black; font-weight:bold">{{sale.subtotal}}</td>
-                                                </tr>
-                                                <tr class="d-none" >
-                                                    <td id="cmp">
-                                                        {{cmp1.state}}
-                                                    </td>
-                                                    <td id="sply">
-                                                        {{sale.placeofsupply}}
-                                                    </td>
-                                                </tr>
-                                                <tr id="igstrow" style="display:none;">
-                                                    <td style="color:black;font-weight:bold">IGST</td>
-                                                    <td style="color:black; font-weight:bold" id="igst">{{sale.taxamount}}</td>
-                                                </tr>
-                                                <tr id="cgstrow" style="display: none;">
-                                                    <td style="color:black; font-weight:bold">CGST</td>
-                                                    <td style="color:black; font-weight:bold" id="cgst"></td>
-                                                </tr>
-                                                <tr id="sgstrow" style="display: none;">
-                                                    <td style="color:black; font-weight:bold">SGST</td>
-                                                    <td style="color:black; font-weight:bold" id="sgst"></td>
-                                                </tr>
-                                           
-                                                <tr>
-                                                    <td style="color:black; font-weight:bold">Tax Amount</td>
-                                                    <td style="color:black; font-weight:bold">{{sale.taxamount}}</td>
-                                                </tr>
-        
-                                                <tr>
-                                                    <td style="color:black; font-weight:bold">Shipping Charge</td>
-                                                    <td style="color:black; font-weight:bold">{{sale.shipping_charge}}</td>
-                                                </tr>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td style="color:black; font-weight:bold">Sale Total:</td>
-                                                        <td style="color:black; font-weight:bold ;">{{sale.salestotal}}</td>
-                                                    </tr>
-                                                </tfoot>
+                                        <div class="col-5">
+                                            <br><br><br>
+                                            
+            
                                             </table>
-                    
-                                            
                                         </div>
                                     </div>
-                                </section> -->
-                    
-                                <!-- Cart BG -->
-                                <!-- <img src="cart.jpg" class="img-fluid cart-bg" alt=""> -->
-                    
-                                <!-- <footer>
-                                    <hr>
-                                    <p class="m-0 text-center">
-                                        View THis Invoice Online At - <a href="#!"> invoice/saburbd.com/#868 </a>
-                                    </p>
-                                    <div class="social pt-3">
-                                        <span class="pr-2">
-                                            <i class="fas fa fa-mobile-alt"></i>
-                                            <span>0123456789</span>
-                                        </span>
-                                        <span class="pr-2">
-                                            <i class="fas fa fa-envelope"></i>
-                                            <span>me@saburali.com</span>
-                                        </span>
-                                        <span class="pr-2">
-                                            <i class="fab fa-facebook-f"></i>
-                                            <span>/sabur.7264</span>
-                                        </span>
-                                        <span class="pr-2">
-                                            <i class="fab fa-youtube"></i>
-                                            <span>/abdussabur</span>
-                                        </span>
-                                        <span class="pr-2">
-                                            <i class="fab fa-github"></i>
-                                            <span>/example</span>
-                                        </span>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-10"><br>
+                                        <table class="table table-hover table-bordered  template3table" id="table3">
+                                            <thead>
+                                                <tr>
+                                                    <td style="color:black;font-weight:bold">ACCOUNT</td>
+                                                    <td style="color:black;font-weight:bold">CONTACT</td>
+                                                    <td style="color:black;font-weight:bold">DEBITS</td>
+                                                    <td style="color:black;font-weight:bold">CREDITS</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+            
+                                                {% for j in saleitem %}
+                                                <tr>
+                                                    <td style="color:black">{{j.account}}</td>
+                                                    <td style="color:black">{{j.contact}}</td>
+                                                    <td style="color:black">{{j.debit|default_if_none:"0.00"|floatformat:2}}</td>
+        <td style="color:black">{{j.credit|default_if_none:"0.00"|floatformat:2}}</td>
+        
+                                                
+                                                </tr>
+                                                {% endfor %}
+                                                <tr></tr>
+                                                <tr style="width: 100%;margin-top: 1px;color:black; font-weight:bold"  >
+                                                    <td colspan="2" class="table-head" style="font-size:13px;color:black; font-weight:bold">Sub Total</td>
+                                                    <td class="pcs-total-section-value text-align-center" style="color: #000000;">₹{{ sale.s_totaldeb }}</td>
+                                                    <td class="pcs-total-section-value text-align-right" style="color: #000000;">₹{{ sale.s_totalcre }}</td>
+                                                </tr>
+                                                <tr  style="height:40px;" class="pcs-balance">
+                                                    <td colspan="2"  style="padding:5px 10px 5px 0;font-size:16px;color:black; font-weight:bold"><b>Total</b></td>
+                                                    <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_deb }}</b></td>
+                                                    <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_cre }}</b></td>
+                                                </tr>
+            
+                                            </tbody>
+            
+                                            </table>
+                                            <hr style="background-color: #000000;">
+                                            <!-- <table class="table table-borderless">
+                                                <tbody>
+                                                    <tr >
+                                                        <th style="color: #000;">Grand Total</th>
+                                                        <th style="color: #000;">:</th>
+                                                        <th class="text-right" style="color: #000;">{{sale.salestotal}}</th>
+                                                    </tr>
+                                                    <tr >
+                                                </tbody>
+                                            </table> -->
+                                        </div>
                                     </div>
-                                </footer> -->
+                                </section> 
                             </div>
                         </div>
-            
-            </div>
+                    </div>
             
         </div>
         <div style="text-align: center;">
