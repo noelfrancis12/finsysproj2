@@ -486,7 +486,7 @@ footer p {
                             </ul>
                         </div>
                             <li class="nav-item active mx-1" >
-                            <a class="nav-link text-light  btn btn-outline-info rounded-pill text-grey p-1" role="button" onclick="window.print()">&nbsp;&nbsp;Print&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
+                            <a class="nav-link text-light  btn btn-outline-info rounded-pill text-grey p-1" role="button" onclick='printfunction()'>&nbsp;&nbsp;Print&nbsp;&nbsp;<span class="sr-only">(current)</span></a>
                             </li>
       
                             <li class="nav-item mx-1">
@@ -1269,8 +1269,18 @@ aria-hidden="true">
         document.getElementById('overview-section').style.display = 'none';
         document.getElementById('detailed-view').style.display = 'block';
     });
+    function printfunction(){
+        const overview=document.getElementById('overview-section').style.display
+        console.log(overview,"fdg")
+        if (overview=='block'){
+            document.getElementById('overview-section').style.display = 'none';
+            document.getElementById('detailed-view').style.display = 'block';
+            toggleTemplate('whatToPrint1','toggleTemplate1')
+        };
+        window.print()
+    }
 </script>
-<div id="overview-section" style="padding: 20px;  border-radius: 10px; margin: 20px 0; color: #1c72b4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<div id="overview-section" style="padding: 20px;  border-radius: 10px; margin: 20px 0; color: #1c72b4; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;display: block;">
     <div id="details">
         <div class="row g-0" style="margin-left: 1px; margin-right: 1px;">
             <div class="col-lg-8" style="background-color: #243e54; border-top-left-radius: 2vh; border-bottom-left-radius: 2vh;">
