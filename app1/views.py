@@ -31673,8 +31673,9 @@ def update_mj(request, id):
         desc = request.POST.getlist("desc")
         contact = request.POST.getlist("contact")
         debit = request.POST.getlist("debit")
+        debit = [float(d) if d else 0 for d in debit]
         credit = request.POST.getlist("credit")
-
+        credit = [float(c) if c else 0 for c in credit]
         obj_dele = mjournal1.objects.filter(mjrnl=p_bill.id)
         obj_dele.delete()
         

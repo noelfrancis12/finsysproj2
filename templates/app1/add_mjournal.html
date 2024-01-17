@@ -108,7 +108,7 @@
                                     
                                             <div class="col-md-3">
                                                 <label class="col-form-label">Reference no  </label>
-                                                <input type="text" class="form-control"  id="rjno" value="{{ref_no}}" name="rjnum">
+                                                <input type="text" class="form-control"  id="rjno" value="{{ref_no}}" name="rjnum" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -741,6 +741,28 @@
 	});
 </script> -->
 
+<script type="text/javascript">
+    $(document).on('change','#jno', function() {
+        var currentJNo = $('#jno').val();
+        var expectedJNo = '{{j_no}}';
+        var invList = "{{ inv_list }}";
+        var invListArray = invList.split(",");
+
+        // Check if the journal number is the expected next number
+        if (currentJNo != expectedJNo) {
+            alert('Journal Number should be continuous. Expected Journal Number is ' + expectedJNo);
+            $('#jno').val(''); // Clear the input field
+            return false;
+        }
+
+        // Check if the journal number already exists
+        if (invListArray.includes(currentJNo)) {
+            alert('Journal Number already in use.');
+            $('#jno').val(''); // Clear the input field
+            return false;
+        }
+    });
+</script>
 
 
        
