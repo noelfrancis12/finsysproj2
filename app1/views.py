@@ -51772,3 +51772,51 @@ def journal_details(request):
 
     # return render(request,'app1/journal_details.html',{'details':details,'cmp1':cmp1,'defaultCount':defaultCount})
     return render(request,'app1/journal_details.html',{'details':details,'cmp1':cmp1,'defaultAmount':defaultAmount,'defaultAmountb':defaultAmountb})
+def ManualJournalToEmail(request):
+    if request.user:
+            try:
+                if request.method == 'POST':
+                    
+                    emails_string = request.POST['email_ids']
+                    
+                    data = mjournal.objects.filter(cid_id=request.user.id)
+                    
+
+                    # Split the string by commas and remove any leading or trailing whitespace
+                    emails_list = [email.strip() for email in emails_string.split(',')]
+                    email_message = request.POST['email_message']
+                    
+                    cmp = company.objects.get(id_id=request.user.id)
+                    saleitem = mjournal1.objects.filter(mjrnl__id=request.user.id)
+
+
+                    context = {'cmp': cmp, 'data': data, 'email_message': email_message,'saleitem':saleitem}
+                    print('context working')
+                    template_path = 'app1/manual_journal_pdf.html'
+                    print('tpath working')
+                    template = get_template(template_path)
+                    print('template working')
+                    html = template.render(context)
+                    print('html working')
+                    result = BytesIO()
+                    print('bytes working')
+                    pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result)  # Change encoding to 'utf-8'
+                    print('pisa working')
+
+                    if pdf.err:
+                        raise Exception(f"PDF generation error: {pdf.err}")
+
+                    result.seek(0)  # Move the buffer's position to the start for reading
+                    filename = f'manual_journal-{cmp.cname}.pdf'
+                    subject = f"manual_journal - {cmp.cname}"
+                    email = EmailMessage(subject, f"Hi, \n{email_message} -of -{cmp.cname}. ", from_email=settings.EMAIL_HOST_USER, to=emails_list)
+                    email.attach(filename, result.read(), "application/pdf")  # Use result.read() directly
+                    email.send(fail_silently=False)
+
+
+                    messages.success(request, 'Report has been shared via email successfully..!')
+                    return redirect('purchase_order_details')
+            except Exception as e:
+                messages.error(request, f'Error while sending report: {e}')
+                return redirect('purchase_order_details')
+            

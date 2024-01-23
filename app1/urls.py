@@ -1369,4 +1369,5 @@ urlpatterns = [
     path('debit_add_file/<int:id>/', views.debit_add_file, name='debit_add_file'),
     #noel
     path('journal_details',views.journal_details,name='journal_details'),
+    path('ManualJournalToEmail',views.ManualJournalToEmail,name="ManualJournalToEmail"),
 ]

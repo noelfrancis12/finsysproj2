@@ -524,15 +524,31 @@ footer p {
     var tableData = getTableData(); // Implement the function to fetch table data
 
     // Create email subject and body
-    var emailSubject = "Recurring Bill Details";
-    var emailBody = "Check out the Recurring Bill Details:\n" + tableData;
+    var emailSubject = "Manual Journal";
+    var emailBody = "Check out the Manual Journal Details:\n" + tableData;
 
     // Create a mailto link with subject and body for Gmail
     var gmailLink = "https://mail.google.com/mail/?view=cm&fs=1&to=&su=" + encodeURIComponent(emailSubject) + "&body=" + encodeURIComponent(emailBody);
 
-    // Open the link in a new tab or windoww
-    window.open(gmailLink, "_blank");
+    // Generate PDF from the "whatToPrint1" section content
+    html2pdf(document.getElementById('whatToPrint1'), {
+        margin: 10,
+        filename: 'manual_journal.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    }).then(function (pdf) {
+        // Convert the PDF to a data URL
+        var pdfData = pdf.output('datauristring');
+
+        // Append the PDF data to the mailto link
+        gmailLink += '&attachment=' + encodeURIComponent(pdfData);
+
+        // Open the link in a new tab or window
+        window.open(gmailLink, "_blank");
+    });
 }
+
 </script>
                             
 
@@ -571,7 +587,7 @@ footer p {
                 </div>
                 <div class="modal-body" style="background: #243e54;">
                   <div class="card p-3 m-3">
-                    <form action="{% url 'purchaseOrderDetailsToEmail' %}" method="post" class="needs-validation"
+                    <form action="{% url 'ManualJournalToEmail' %}" method="post" class="needs-validation"
                       id="share_to_email_form" autocomplete="off">
                       {% csrf_token %}
                       <input name="FromD" class="inputdate form-control"  id="date1"  type="date" hidden >
