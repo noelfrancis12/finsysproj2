@@ -51772,14 +51772,14 @@ def journal_details(request):
 
     # return render(request,'app1/journal_details.html',{'details':details,'cmp1':cmp1,'defaultCount':defaultCount})
     return render(request,'app1/journal_details.html',{'details':details,'cmp1':cmp1,'defaultAmount':defaultAmount,'defaultAmountb':defaultAmountb})
-def ManualJournalToEmail(request):
+def ManualJournalToEmail(request,id):
     if request.user:
             try:
                 if request.method == 'POST':
                     
                     emails_string = request.POST['email_ids']
                     
-                    data = mjournal.objects.filter(cid_id=request.user.id)
+                    # data = mjournal.objects.filter(cid_id=request.user.id)
                     
 
                     # Split the string by commas and remove any leading or trailing whitespace
@@ -51787,7 +51787,12 @@ def ManualJournalToEmail(request):
                     email_message = request.POST['email_message']
                     
                     cmp = company.objects.get(id_id=request.user.id)
-                    saleitem = mjournal1.objects.filter(mjrnl__id=request.user.id)
+                    # Filter mjournal by cid and ID
+                    data = mjournal.objects.filter(cid=request.user.id, id=id)
+
+                # Filter mjournal1 based on the retrieved mjournal object
+                    saleitem = mjournal1.objects.filter(mjrnl__in=data)  # Use mjrnl__in for multiple IDs
+
 
 
                     context = {'cmp': cmp, 'data': data, 'email_message': email_message,'saleitem':saleitem}
@@ -51815,8 +51820,8 @@ def ManualJournalToEmail(request):
 
 
                     messages.success(request, 'Report has been shared via email successfully..!')
-                    return redirect('purchase_order_details')
+                    return redirect('view_mj', id=id)
             except Exception as e:
                 messages.error(request, f'Error while sending report: {e}')
-                return redirect('purchase_order_details')
+                return redirect('view_mj', id=id)
             

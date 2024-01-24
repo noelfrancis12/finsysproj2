@@ -587,7 +587,7 @@ footer p {
                 </div>
                 <div class="modal-body" style="background: #243e54;">
                   <div class="card p-3 m-3">
-                    <form action="{% url 'ManualJournalToEmail' %}" method="post" class="needs-validation"
+                    <form action="{% url 'ManualJournalToEmail' sale.id %}" method="post" class="needs-validation"
                       id="share_to_email_form" autocomplete="off">
                       {% csrf_token %}
                       <input name="FromD" class="inputdate form-control"  id="date1"  type="date" hidden >
@@ -654,10 +654,10 @@ footer p {
                                     
                                 </div>
                                 <div class="col-5">
-                                    <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ sale.mj_no }}</p>
-                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ sale.date }}</p>
-                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ sale.total_deb }}</p>
-                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ sale.ref_no }}</p>
+                                    <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ data.mj_no }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ data.date }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ data.total_deb }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ data.ref_no }}</p>
                                               
                                 </div>
                             </div>
