@@ -51787,15 +51787,15 @@ def ManualJournalToEmail(request,id):
                     email_message = request.POST['email_message']
                     
                     cmp = company.objects.get(id_id=request.user.id)
-                    # Filter mjournal by cid and ID
-                    data = mjournal.objects.filter(cid=request.user.id, id=id)
+                    # Retrieve the specific mjournal object
+                    mjournal_obj = mjournal.objects.get(id=id)
 
-                # Filter mjournal1 based on the retrieved mjournal object
-                    saleitem = mjournal1.objects.filter(mjrnl__in=data)  # Use mjrnl__in for multiple IDs
+                    # Filter mjournal1 objects based on the retrieved mjournal object
+                    saleitem = mjournal1.objects.filter(mjrnl=mjournal_obj)
 
 
 
-                    context = {'cmp': cmp, 'data': data, 'email_message': email_message,'saleitem':saleitem}
+                    context = {'cmp': cmp, 'data': mjournal_obj, 'email_message': email_message,'saleitem':saleitem}
                     print('context working')
                     template_path = 'app1/manual_journal_pdf.html'
                     print('tpath working')

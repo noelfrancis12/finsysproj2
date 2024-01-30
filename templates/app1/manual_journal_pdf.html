@@ -23,10 +23,10 @@
     <div class="my-5 page" size="A4" >
         <div class="p-5" id="printdiv1">
             <div id="ember2512" class="tooltip-container ember-view ribbon text-ellipsis">
-                <div class="ribbon-inner ribbon-open">{% if sale.status == 'Publish' %}
+                <div class="ribbon-inner ribbon-open">{% if data.status == 'Publish' %}
                     Saved
                 {% else %}
-                    {{ sale.status }}
+                    {{ data.status }}
                 {% endif %}<!----></div></div>
             <section class="top-content bb d-flex justify-content-between">
                 <div class="logo">
@@ -37,7 +37,7 @@
                         <p>Manual Journal</p>
                     </div>
                     <div class="position-relative">
-                        <p>Journal No. <span>{{ sale.mj_no }}</span></p>
+                        <p>Journal No. <span>{{ data.mj_no }}</span></p>
                     </div>
                 </div>
             </section>
@@ -56,10 +56,10 @@
                             
                         </div>
                         <div class="col-5">
-                            <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ sale.mj_no }}</p>
-                                      <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ sale.date }}</p>
-                                      <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ sale.total_deb }}</p>
-                                      <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ sale.ref_no }}</p>
+                            <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ data.mj_no }}</p>
+                                      <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ data.date }}</p>
+                                      <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ data.total_deb }}</p>
+                                      <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ data.ref_no }}</p>
                                       
                         </div>
                     </div>
@@ -99,13 +99,13 @@
                         <tr></tr>
                         <tr style="width: 100%;margin-top: 1px;color:black; font-weight:bold"  >
                             <td colspan="2" class="table-head" style="font-size:13px;color:black; font-weight:bold">Sub Total</td>
-                            <td class="pcs-total-section-value text-align-center" style="color: #000000;">₹{{ sale.s_totaldeb }}</td>
-                            <td class="pcs-total-section-value text-align-right" style="color: #000000;">₹{{ sale.s_totalcre }}</td>
+                            <td class="pcs-total-section-value text-align-center" style="color: #000000;">₹{{ data.s_totaldeb }}</td>
+                            <td class="pcs-total-section-value text-align-right" style="color: #000000;">₹{{ data.s_totalcre }}</td>
                         </tr>
                         <tr  style="height:40px;" class="pcs-balance">
                             <td colspan="2"  style="padding:5px 10px 5px 0;font-size:16px;color:black; font-weight:bold"><b>Total</b></td>
-                            <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_deb }}</b></td>
-                            <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ sale.total_cre }}</b></td>
+                            <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ data.total_deb }}</b></td>
+                            <td style="font-size:16px;color:black; font-weight:bold"><b>₹{{ data.total_cre }}</b></td>
                         </tr>
 
                     </tbody>
