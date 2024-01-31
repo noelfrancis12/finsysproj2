@@ -532,17 +532,65 @@
                 }
             });
             updateRowNumbers();
+           calc()
+            
         });
     });
+    $('#tab_logic tbody').on('keyup change', function() {
+                    calc();
+                });
+    function calc() {
+                    $('#tab_logic tbody tr').each(function() {
+                        var html = $(this).html();
+                        if (html != '') {
+                            var debit = $(this).find('.debit').val();
+                            var credit = $(this).find('.credit').val();
+                        
+                            $(this).find('.total').val(parseFloat(+debit));
+                            $(this).find('.total1').val(parseFloat(+credit));
+                            
+                            calc_total();
+                        }
+                    });
+                }
+                function calc_total() {
+                    var total = 0;
+                    var total1 = 0;
+                    $('.total').each(function() {
+                        total += parseFloat($(this).val()) || 0;
+                    });
+                    $('.total1').each(function() {
+                        total1 += parseFloat($(this).val()) || 0;
+                    });
+            
+                    $('#subtotal').val(total.toFixed(2));
+                    $('#amount').val(total.toFixed(2));
+                    $('#sub_total').val(total1.toFixed(2));
+                    $('#amount1').val(total1.toFixed(2));
+                    calc_diff(total, total1);
+                }
+            
+                function calc_diff(subtotal, sub_total) {
+                    var x = 0;
+                    if (subtotal == sub_total) {
+                        $('#diff').val(x.toFixed(2));
+                        $('#diff1').val(x.toFixed(2));
+                    } else if (subtotal > sub_total) {
+                        $('#diff').val(x.toFixed(2));
+                        $('#diff1').val((subtotal - sub_total).toFixed(2));
+                    } else {
+                        $('#diff').val((sub_total - subtotal).toFixed(2));
+                        $('#diff1').val(x.toFixed(2));
+                    }
+                }
+           
 </script>
 
 
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <script>
             $(document).ready(function(){
-                $('#tab_logic tbody').on('keyup change', function() {
-                    calc();
-                });
+               
 
                 function calc() {
                     $('#tab_logic tbody tr').each(function() {

@@ -383,6 +383,9 @@ footer p {
 <script>
     // This function identifies the active template and generates a PDF from itt..
     async function generatePDF() {
+        var overview =   document.getElementById('overview-section')
+    if (overview.style.display=='none'){
+        
     var activeTemplateId = getActiveTemplateId(); // Get the active template's ID.
     var activeTemplate = document.getElementById(activeTemplateId); // Get the active template element.
     var doc = new jsPDF('p', 'pt', 'a4');
@@ -397,6 +400,27 @@ footer p {
 
     // Save the PDF with the journal number as the file name..
     doc.save(`${journalNumber}.pdf`);
+}
+else{
+    var activeTemplate = document.getElementById('whatToPrint1'); 
+    // Get the active template element.
+    activeTemplate.style.display = 'block'
+    document.getElementById('detailed-view').style.display = 'block'
+    var doc = new jsPDF('p', 'pt', 'a4');
+
+    await html2canvas(activeTemplate).then((canvas) => {
+        // This will create a 'snapshot' of the active template.
+        doc.addImage(canvas.toDataURL("image/png"), 'PNG', 15, 15, 560, 0);
+    });
+
+    // Fetch the journal number from the page (assuming it's stored in an element with ID 'journalNumber').
+    var journalNumber = document.getElementById('journalNumber').innerText || 'Document';
+
+    // Save the PDF with the journal number as the file name..
+    doc.save(`${journalNumber}.pdf`);
+    // activeTemplate.style.display = 'none'
+    document.getElementById('detailed-view').style.display = 'none'
+}
 }
 
 
@@ -654,10 +678,10 @@ footer p {
                                     
                                 </div>
                                 <div class="col-5">
-                                    <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ data.mj_no }}</p>
-                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ data.date }}</p>
-                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ data.total_deb }}</p>
-                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ data.ref_no }}</p>
+                                    <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Journal No :{{ sale.mj_no }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Date :{{ sale.date }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Amount :{{ sale.total_deb }}</p>
+                                              <p class="address " style="padding:4px 10px 4px 0px;font-size:12pt;">Reference No :{{ sale.ref_no }}</p>
                                               
                                 </div>
                             </div>
