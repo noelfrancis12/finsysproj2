@@ -437,9 +437,8 @@
         // Add new item row
         function add_item_row() {
             var lastRow = $('#items-table-body > tr:last');
-            var newRow = lastRow.clone(true);
-            newRow.find('input').val(''); // Clear all inputs in the cloned row
-            newRow.insertAfter(lastRow);
+            lastRow.clone(true).insertAfter(lastRow);
+            $('#items-table-body > tr:last input').val('');
             updateRowNumbers();
         }
 
@@ -457,11 +456,58 @@
                 }
             });
             updateRowNumbers();
+           calc()
+            
         });
-
-        // Initial row numbering
-        updateRowNumbers();
     });
+    $('#tab_logic tbody').on('keyup change', function() {
+                    calc();
+                });
+    function calc() {
+                    $('#tab_logic tbody tr').each(function() {
+                        var html = $(this).html();
+                        if (html != '') {
+                            var debit = $(this).find('.debit').val();
+                            var credit = $(this).find('.credit').val();
+                        
+                            $(this).find('.total').val(parseFloat(+debit));
+                            $(this).find('.total1').val(parseFloat(+credit));
+                            
+                            calc_total();
+                        }
+                    });
+                }
+                function calc_total() {
+                    var total = 0;
+                    var total1 = 0;
+                    $('.total').each(function() {
+                        total += parseFloat($(this).val()) || 0;
+                    });
+                    $('.total1').each(function() {
+                        total1 += parseFloat($(this).val()) || 0;
+                    });
+            
+                    $('#subtotal').val(total.toFixed(2));
+                    $('#amount').val(total.toFixed(2));
+                    $('#sub_total').val(total1.toFixed(2));
+                    $('#amount1').val(total1.toFixed(2));
+                    calc_diff(total, total1);
+                }
+            
+                function calc_diff(subtotal, sub_total) {
+                    var x = 0;
+                    if (subtotal == sub_total) {
+                        $('#diff').val(x.toFixed(2));
+                        $('#diff1').val(x.toFixed(2));
+                    } else if (subtotal > sub_total) {
+                        $('#diff').val(x.toFixed(2));
+                        $('#diff1').val((subtotal - sub_total).toFixed(2));
+                    } else {
+                        $('#diff').val((sub_total - subtotal).toFixed(2));
+                        $('#diff1').val(x.toFixed(2));
+                    }
+                }
+           
 </script>
 
 
@@ -581,5 +627,27 @@
     {% endif %}
 {% endblock %}
 
+<script type="text/javascript">
+    $(document).on('change','#jno', function() {
+        var currentJNo = $('#jno').val();
+        var expectedJNo = '{{j_no}}';
+        var invList = "{{ inv_list }}";
+        var invListArray = invList.split(",");
+
+        // Check if the journal number is the expected next number
+        // if (currentJNo != expectedJNo) {
+        //     alert('Journal Number should be continuous. Expected Journal Number is ' + expectedJNo);
+        //     $('#jno').val(''); // Clear the input field
+        //     return false;
+        // }
+
+        // Check if the journal number already exists
+        if (invListArray.includes(currentJNo)) {
+            alert('Journal Number already in use.');
+            $('#jno').val(''); // Clear the input field
+            return false;
+        }
+    });
+</script>
 
 

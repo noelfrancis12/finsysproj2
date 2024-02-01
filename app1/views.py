@@ -31476,7 +31476,7 @@ def add_mjournal(request):
         employee = payrollemployee.objects.filter(cid_id=cmp1)
 
         # Get the last entry in mjournal.
-        ref = mjournal.objects.last()
+        ref = mjournal.objects.filter(cid=cmp1).last()
 
         if ref:
             ref_no = int(ref.ref_no) + 1
@@ -31500,7 +31500,7 @@ def add_mjournal(request):
 
         # Generating a list of existing journal numbers for some purpose.
         inv_list = ''
-        inv_ord = mjournal.objects.all()
+        inv_ord = mjournal.objects.filter(cid=cmp1)
         for s in inv_ord:
             inv_list = s.mj_no + ',' + inv_list
 

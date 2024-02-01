@@ -797,11 +797,11 @@
         var invListArray = invList.split(",");
 
         // Check if the journal number is the expected next number
-        if (currentJNo != expectedJNo) {
-            alert('Journal Number should be continuous. Expected Journal Number is ' + expectedJNo);
-            $('#jno').val(''); // Clear the input field
-            return false;
-        }
+        // if (currentJNo != expectedJNo) {
+        //     alert('Journal Number should be continuous. Expected Journal Number is ' + expectedJNo);
+        //     $('#jno').val(''); // Clear the input field
+        //     return false;
+        // }
 
         // Check if the journal number already exists
         if (invListArray.includes(currentJNo)) {
