@@ -31493,7 +31493,7 @@ def add_mjournal(request):
             # Increment the numeric part.
             num = int(num_part) + 1
             # Format the new journal number with the prefix "JN" and leading zeros.
-            j_no = 'JN' + str(num).zfill(2)
+            j_no = '' + str(num).zfill(2)
         else:
             # Set the initial journal number if there are no existing records.
             j_no = 'JN01'
