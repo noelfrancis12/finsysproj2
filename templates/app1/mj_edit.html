@@ -55,8 +55,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <label class="col-form-label">Journal no * </label>
-                                                <input type="text" class="form-control"   id="jno" name="mj_no" value="{{ a.mj_no }}" required> </div>
+                                                <div class="d-flex">
+                                                    <label class="col-form-label">Journal No.</label><span class="text-danger mt-1 ml-3" id="dangerdiv" style="display: none;"><span class="text-white"> (</span>This Should be Continous <span class="text-white">)</span></span>
+                                                </div>
+                                                <input type="text" class="form-control"   id="j_no" name="mj_no" value="{{ a.mj_no }}" required> </div>
                                             <div class="col-md-3">
                                                 <label class="col-form-label">Reference no  </label>
                                                 <input type="text" class="form-control"  id="ref_no" name="ref_no" value="{{ a.ref_no }}" readonly>
@@ -627,7 +629,7 @@
     {% endif %}
 {% endblock %}
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(document).on('change','#jno', function() {
         var currentJNo = $('#jno').val();
         var expectedJNo = '{{j_no}}';
@@ -648,6 +650,26 @@
             return false;
         }
     });
+</script> -->
+<script type="text/javascript">
+    $(document).on('change','#j_no', function() {
+        inv = '{{mjrnl1.mj_no}}'
+        console.log('abc')
+        inv_value = $('#j_no').val();
+        if(inv_value != inv){
+            document.getElementById('dangerdiv').style.display = 'block';
+        }else{
+            document.getElementById('dangerdiv').style.display = 'none';
+        }
+        var inv_list = "{{ inv_list}}";
+        invlist = inv_list.split(",");
+        for(let i=0; i<invlist.length; i++){
+            if (inv_value == invlist[i]){
+                alert('Journal Number already in use.')
+                document.getElementById('dangerdiv').style.display = 'none';
+                document.getElementById('j_no').value = ''
+            }
+        }
+    })
 </script>
-
 

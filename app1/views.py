@@ -31467,7 +31467,7 @@ def gomjoural(request):
 
 @login_required(login_url='regcomp')
 def add_mjournal(request): 
-    try:
+   
         # Retrieve necessary objects from the database.
         cmp1 = company.objects.get(id=request.session['uid'])
         acc = accounts1.objects.filter(cid=cmp1)
@@ -31475,42 +31475,56 @@ def add_mjournal(request):
         vndr = vendor.objects.filter(cid=cmp1)
         employee = payrollemployee.objects.filter(cid_id=cmp1)
 
-        # Get the last entry in mjournal.
         ref = mjournal.objects.filter(cid=cmp1).last()
-
         if ref:
             ref_no = int(ref.ref_no) + 1
+            j_no = 1000 + ref_no
         else:
-            # Start ref_no from 1 if no entries are found.
             ref_no = 1
+            j_no = 1001
 
-        # Handling the journal number (j_no) generation.
         sel = mjournal.objects.filter(cid=cmp1).last()
         if sel:
             j_no = str(sel.mj_no)
-            # Extract the numeric part from the journal number.
-            num_part = ''.join(filter(str.isdigit, j_no))
-            # Increment the numeric part.
-            num = int(num_part) + 1
-            # Format the new journal number with the prefix "JN" and leading zeros.
-            j_no = '' + str(num).zfill(2)
-        else:
-            # Set the initial journal number if there are no existing records.
-            j_no = 'JN01'
+            numbers = []
+            stri = []
+            for word in j_no:
+                if word.isdigit():
+                    numbers.append(word)
+                else:
+                    stri.append(word)
+            
+            num = ''
+            for i in numbers:
+                num += i
+            
+            st = ''
+            for j in stri:
+                st = st + j
 
-        # Generating a list of existing journal numbers for some purpose.
+            j_no = int(num) + 1
+
+            if num[0] == '0':
+                if j_no < 10:
+                    j_no = st + '0' + str(j_no)
+                else:
+                    j_no = st + str(j_no)
+            else:
+                j_no = st + str(j_no)
+
         inv_list = ''
         inv_ord = mjournal.objects.filter(cid=cmp1)
         for s in inv_ord:
             inv_list = s.mj_no + ',' + inv_list
 
+        
+
+
         # Preparing context for the template.
         context = {'acc': acc, 'cmp1': cmp1, 'cust': cust, 'vndr': vndr, 'employee': employee, 'ref_no': ref_no, 'j_no': j_no, 'ref': ref, 'sel': sel, 'inv_ord': inv_ord, 'inv_list': inv_list}
         return render(request, 'app1/add_mjournal.html', context)   
 
-    except:
-        # Redirect to a specific URL if an error occurs.
-        return redirect('gomjournal')  
+    
   
 
 
@@ -31610,7 +31624,13 @@ def mj_edit_page(request,id):
         acc  = accounts1.objects.filter(cid=cmp1)
         employee=payrollemployee.objects.filter(cid_id=cmp1)
         mjl1 = mjournal1.objects.filter(mjrnl=id,cid=cmp1)
-        context = {'mjrnl':mjrnl,'acc':acc,'mj1':mjl1,'cust':cust,'vndr':vndr,'cmp1': cmp1,'employee':employee}
+        mjrnl1 = mjournal.objects.get(id=id, cid=cmp1)
+        inv_list = ''
+        inv_ord = mjournal.objects.all()
+        for s in inv_ord:
+            inv_list = s.mj_no + ',' + inv_list
+
+        context = {'mjrnl':mjrnl,'mjrnl1':mjrnl1, 'acc':acc,'mj1':mjl1,'cust':cust,'vndr':vndr,'cmp1': cmp1,'employee':employee, 'inv_ord': inv_ord, 'inv_list': inv_list}
         return render(request,'app1/mj_edit.html',context)
     return redirect('gomjoural') 
 
