@@ -511,6 +511,28 @@
                 }
            
 </script>
+<script type="text/javascript">
+    $(document).on('change','#j_no', function() {
+        inv = '{{mjrnl1.mj_no}}'
+        console.log('abc')
+        inv_value = $('#j_no').val();
+        if(inv_value != inv){
+            document.getElementById('dangerdiv').style.display = 'block';
+        }else{
+            document.getElementById('dangerdiv').style.display = 'none';
+        }
+        var inv_list = "{{ inv_list}}";
+        invlist = inv_list.split(",");
+        for(let i=0; i<invlist.length; i++){
+            if (inv_value == invlist[i]){
+                alert('Journal Number already in use.')
+                document.getElementById('dangerdiv').style.display = 'none';
+                document.getElementById('j_no').value = ''
+            }
+        }
+    })
+</script>
+
 
 
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -651,25 +673,3 @@
         }
     });
 </script> -->
-<script type="text/javascript">
-    $(document).on('change','#j_no', function() {
-        inv = '{{mjrnl1.mj_no}}'
-        console.log('abc')
-        inv_value = $('#j_no').val();
-        if(inv_value != inv){
-            document.getElementById('dangerdiv').style.display = 'block';
-        }else{
-            document.getElementById('dangerdiv').style.display = 'none';
-        }
-        var inv_list = "{{ inv_list}}";
-        invlist = inv_list.split(",");
-        for(let i=0; i<invlist.length; i++){
-            if (inv_value == invlist[i]){
-                alert('Journal Number already in use.')
-                document.getElementById('dangerdiv').style.display = 'none';
-                document.getElementById('j_no').value = ''
-            }
-        }
-    })
-</script>
-
