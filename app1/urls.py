@@ -1370,4 +1370,5 @@ urlpatterns = [
     #noel
     path('journal_details',views.journal_details,name='journal_details'),
     path('ManualJournalToEmail/<int:id>/',views.ManualJournalToEmail,name="ManualJournalToEmail"),
+    path('check_inv_value/', views.check_inv_value, name='check_inv_value'),
 ]

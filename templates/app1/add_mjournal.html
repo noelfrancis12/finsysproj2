@@ -107,7 +107,7 @@
                                                 </div>
                                                 <input type="text" class="form-control"   id="j_no" name="jnum" placeholder="{{j_no}}" required> </div>
                                                
-                                    
+                                                <input type="text" class="form-control"   id="journ_no"  placeholder="{{j_no}}" value="{{j_no}}">
                                             <div class="col-md-3">
                                                 <label class="col-form-label">Reference no  </label>
                                                 <input type="text" class="form-control"  id="rjno" value="{{ref_no}}" name="rjnum" readonly>
@@ -696,8 +696,51 @@
             
             
         </script>
-        
-<script type="text/javascript">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).on('blur', '#j_no', function() {
+            var inv_value = $('#j_no').val();
+            var inv = '{{j_no}}'
+            var data = {
+                'inv_value': inv_value,
+                'inv': inv
+            };
+    
+            $.ajax({
+                type: 'GET',
+                url: "{%url 'check_inv_value' %}",  // Modify the URL to point to your Django view
+                data: data,
+                dataType: 'json',
+                success: function(data) {
+                  
+                    if (data.exists) {
+                        
+                        $('#j_no').val(data.next_j_number);
+                        if(data.find){
+                            
+                            alert('Journal Number already in use.')
+                        }  $('#journ_no').val(data.next_j_number);
+                        
+                    } else {
+                        // Handle case where j_number already exists
+                        console.log('success')
+                        var jrnl = $('#journ_no').val();
+                        if(inv_value != jrnl){
+                            document.getElementById('dangerdiv').style.display = 'block';
+                        }else{
+                            document.getElementById('dangerdiv').style.display = 'none';
+                            }
+                        // journ_no
+                    }
+                },
+                error: function(xhr, errmsg, err) {
+                    console.log(xhr.status + ": " + xhr.responseText); // Log any errors to the console
+                    
+                }
+            });
+        });
+    </script>    
+<!-- <script type="text/javascript">
     $(document).on('change','#j_no', function() {
         inv = '{{j_no}}'
         inv_value = $('#j_no').val();
@@ -716,7 +759,7 @@
             }
         }
     })
-</script>
+</script> -->
         <!-- <script>
             // Initialize Select2 on your select elementt
             $(document).ready(function () {

@@ -31524,8 +31524,31 @@ def add_mjournal(request):
         context = {'acc': acc, 'cmp1': cmp1, 'cust': cust, 'vndr': vndr, 'employee': employee, 'ref_no': ref_no, 'j_no': j_no, 'ref': ref, 'sel': sel, 'inv_ord': inv_ord, 'inv_list': inv_list}
         return render(request, 'app1/add_mjournal.html', context)   
 
-    
-  
+ 
+def check_inv_value(request):
+    if request.method == 'GET':
+        j_number = request.GET.get('inv_value')
+        inv = request.GET.get('inv')
+        # Check if the j_number already exists
+        if mjournal.objects.filter(mj_no=j_number).exists():
+            return JsonResponse({'exists': True,'find':True, 'next_j_number': inv})  # Return existing j_number
+        else:
+            # Proceed to retrieve the next j_number
+            # Your existing logic to retrieve the next j_number goes here
+            existing_j_numbers = mjournal.objects.filter(mj_no__startswith=j_number)
+
+            if existing_j_numbers.exists():
+                last_j_number = existing_j_numbers.order_by('-j_number').first().j_number
+                prefix = last_j_number.rstrip('0123456789')
+                numeric_part = int(last_j_number[len(prefix):])
+                next_numeric_part = numeric_part + 1
+                next_j_number = f"{prefix}{next_numeric_part:0{len(last_j_number) - len(prefix)}d}"
+
+                return JsonResponse({'exists': True, 'next_j_number': next_j_number})
+            else:
+                return JsonResponse({'exists': False, 'next_j_number': j_number})  # Return same j_number if pattern doesn't exist
+    else:
+        return JsonResponse({'error': 'Invalid request'})  
 
 
 @login_required(login_url='regcomp')
